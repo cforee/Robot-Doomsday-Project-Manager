@@ -159,7 +159,6 @@ game = {
         sprite_sheet_handle = $('#spritesheet-player');
 
         setInterval(function() {
-          console.log('cycling frames');
           if (n >= 4) {
             n = 0;
           }
