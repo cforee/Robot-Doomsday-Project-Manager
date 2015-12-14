@@ -32,6 +32,8 @@ game = {
     this.floormap_handle.css('height', this.real_map_height + 'px');
 
     this.set_floor_position(this.level.start_position.x, this.level.start_position.y);
+    this.player.location.x = this.level.start_position.x;
+    this.player.location.y = this.level.start_position.y;
 
     this.center_player();
 
@@ -67,27 +69,39 @@ game = {
     switch(direction) {
       case 'up':
         self.player.sprite.img_path = 'images/sprites/player/walk_up.png';
-        self.floormap_handle.animate({
-          top: '+=' + self.move_increment + 'px'
-        });
+        if (self.player.can_move('up')) {
+          self.player.location.y--;
+          self.floormap_handle.animate({
+            top: '+=' + self.move_increment + 'px'
+          });
+        }
         break;
       case 'right':
         self.player.sprite.img_path = 'images/sprites/player/walk_right.png';
-        self.floormap_handle.animate({
-          left: '-=' + self.move_increment + 'px'
-        });
+        if (self.player.can_move('right')) {
+          self.player.location.x++;
+          self.floormap_handle.animate({
+            left: '-=' + self.move_increment + 'px'
+          });
+        }
         break;
       case 'down':
         self.player.sprite.img_path = 'images/sprites/player/walk_down.png';
-        self.floormap_handle.animate({
-          top: '-=' + self.move_increment + 'px'
-        });
+        if (self.player.can_move('down')) {
+          self.player.location.y++;
+          self.floormap_handle.animate({
+            top: '-=' + self.move_increment + 'px'
+          });
+        }
         break;
       case 'left':
         self.player.sprite.img_path = 'images/sprites/player/walk_left.png';
-        self.floormap_handle.animate({
-          left: '+=' + self.move_increment + 'px'
-        });
+        if (self.player.can_move('left')) {
+          self.player.location.x--;
+          self.floormap_handle.animate({
+            left: '+=' + self.move_increment + 'px'
+          });
+        }
         break;
     }
   },
@@ -121,26 +135,31 @@ game = {
 
   },
 
+  // define all levels here
   levels: {
     lobby: {
       map: [
-        'W0','W0','W0','W0','W0','W0','W0',
-        'W0','F0','F0','F0','F0','F0','W0',
-        'W0','F0','F0','F0','F0','F0','W0',
-        'W0','F0','F0','F0','F0','F0','W0',
-        'W0','F0','F0','F0','F0','F0','W0',
-        'W0','F0','F0','F0','F0','F0','W0',
-        'W0','W0','W0','W0','W0','W0','W0'
+        'W0','W0','W0','W0','W0','W0','W0','W0','W0','W0','W0','W0','W0','W0','W0',
+        'W0','F0','F0','F0','F0','F0','F0','F0','W0','F0','F0','F0','F0','F0','F0',
+        'W0','F0','W0','F0','W0','F0','W0','F0','F0','F0','F0','F0','F0','F0','F0',
+        'W0','F0','W0','W0','W0','F0','W0','F0','W0','W0','W0','F0','F0','F0','F0',
+        'W0','W0','W0','W0','W0','F0','W0','F0','W0','F0','F0','F0','F0','F0','F0',
+        'F0','F0','F0','F0','F0','F0','F0','F0','W0','F0','F0','F0','F0','F0','F0',
+        'W0','F0','W0','W0','W0','F0','W0','F0','W0','W0','W0','F0','F0','F0','F0',
+        'W0','W0','W0','W0','W0','F0','W0','F0','W0','F0','F0','F0','F0','F0','F0',
+        'F0','F0','F0','F0','F0','F0','F0','F0','W0','F0','F0','F0','F0','F0','F0',
+        'F0','F0','F0','F0','F0','W0','W0','W0','W0','F0','F0','F0','F0','F0','F0'
       ],
-      cols: 7,
-      rows: 7,
+      cols: 15,
+      rows: 10,
       tile_diameter: 320,
       start_position: {
-        x: 3,
-        y: 3
+        x: 1,
+        y: 1
       }
     }
   },
+
 
   keys: {
     up: 38,
@@ -150,6 +169,49 @@ game = {
   },
 
   player: {
+    location: {
+      x: 0,
+      y: 0,
+      get_cell: function(coords) {
+        cell_num = (coords.y * self.level.cols) + coords.x;
+        return cell_num;
+      }
+    },
+
+    can_move: function(direction) {
+      switch(direction) {
+        case 'up':
+          prospective_cell = self.player.location
+            .get_cell({
+              x: self.player.location.x,
+              y: self.player.location.y - 1
+            })
+          break;
+        case 'right':
+          prospective_cell = self.player.location
+            .get_cell({
+              x: self.player.location.x + 1,
+              y: self.player.location.y
+            })
+          break;
+        case 'down':
+          prospective_cell = self.player.location
+            .get_cell({
+              x: self.player.location.x,
+              y: self.player.location.y + 1
+            })
+          break;
+        case 'left':
+          prospective_cell = self.player.location
+            .get_cell({
+              x: self.player.location.x - 1,
+              y: self.player.location.y
+            })
+          break;
+      }
+      return self.tile_types[self.level.map[prospective_cell]].walkable
+    },
+
     sprite: {
       img_path: 'images/sprites/player/walk_down.png',
       diameter: 320,
