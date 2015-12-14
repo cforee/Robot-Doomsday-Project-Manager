@@ -84,16 +84,14 @@ body {
   left: 0;
   z-index: 100;
 }
-/* line 18, ../sass/screen.sass */
-#game-container #floormap .tile {
-  display: inline-block;
-  width: 320px;
-  height: 320px;
-  margin: 0;
-  padding: 0;
-  z-index: 200;
+/* line 19, ../sass/screen.sass */
+#game-container #npcmap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
 }
-/* line 25, ../sass/screen.sass */
+/* line 24, ../sass/screen.sass */
 #game-container #player {
   position: absolute;
   overflow: hidden;
@@ -105,7 +103,16 @@ body {
   padding: 0;
   z-index: 300;
 }
-/* line 35, ../sass/screen.sass */
+/* line 34, ../sass/screen.sass */
 #game-container #player img {
   position: absolute;
+}
+/* line 37, ../sass/screen.sass */
+#game-container .tile {
+  display: inline-block;
+  width: 320px;
+  height: 320px;
+  margin: 0;
+  padding: 0;
+  z-index: 200;
 }
