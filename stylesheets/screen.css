@@ -82,12 +82,30 @@ body {
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 100;
 }
-/* line 17, ../sass/screen.sass */
+/* line 18, ../sass/screen.sass */
 #game-container #floormap .tile {
   display: inline-block;
   width: 320px;
   height: 320px;
   margin: 0;
   padding: 0;
+  z-index: 200;
+}
+/* line 25, ../sass/screen.sass */
+#game-container #player {
+  position: absolute;
+  overflow: hidden;
+  width: 320px;
+  height: 320px;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  z-index: 300;
+}
+/* line 35, ../sass/screen.sass */
+#game-container #player img {
+  position: absolute;
 }
