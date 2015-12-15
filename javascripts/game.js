@@ -231,19 +231,20 @@ game = {
     sprite: {
       img_path: 'images/sprites/player/walk_down.png',
       diameter: 320,
+      framerate: 100,
       num_frames: 4,
 
       cycle_frames: function(current_frame) {
         sprite_sheet_handle = $('#spritesheet-player');
 
         setInterval(function() {
-          if (n >= 4) {
+          if (n >= self.player.sprite.num_frames) {
             n = 0;
           }
           sprite_sheet_handle.attr('src', self.player.sprite.img_path);
           sprite_sheet_handle.css('left', -(n * 320) + 'px');
           n++;
-        }, 100);
+        }, self.player.sprite.framerate);
 
       }
     }
