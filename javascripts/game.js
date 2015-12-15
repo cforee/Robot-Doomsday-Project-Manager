@@ -9,6 +9,7 @@ game = {
 
   container_handle: $('#game-container'),
   floormap_handle: $('#floormap'),
+  itemmap_handle: $('#itemmap'),
   npcmap_handle: $('#npcsmap'),
   player_handle: $('#player'),
   level: null,
@@ -116,11 +117,9 @@ game = {
 
   draw_level: function() {
     for(n = 0; n < this.level.map.length; n++) {
-      this.floormap_handle.append(
-        '<div class="tile"><img src="images/'
-        + this.tile_types[this.level.map[n]].img_path
-        + '" /></div>'
-      );
+      this.floormap_handle.append('<div class="tile"><img src="images/' + this.tile_types[this.level.map[n]].img_path + '" /></div>');
+      this.itemmap_handle.append('<div class="tile"><img src="images/' + this.item_types[this.level.items[n]].img_path + '" /></div>');
+      this.npcmap_handle.append('<div class="tile"><img src="images/' + this.npc_types[this.level.npcs[n]].img_path + '" /></div>');
     }
   },
 
@@ -145,23 +144,23 @@ game = {
         'W00','F00','F00','F00','F00','F00','W00',
         'W00','W00','W00','W00','W00','W00','W00',
       ],
-      objects: [
-        '000','000','000','000','000','000','000',
-        '000','000','000','000','000','000','000',
-        '000','000','000','000','000','N01','000',
-        '000','000','000','000','000','000','000',
-        '000','000','000','000','000','000','000',
-        '000','000','000','000','000','000','000',
-        '000','000','000','000','000','000','000',
+      items: [
+        'NIL','NIL','NIL','NIL','NIL','NIL','NIL',
+        'NIL','NIL','NIL','NIL','NIL','NIL','NIL',
+        'NIL','NIL','NIL','NIL','NIL','NIL','NIL',
+        'NIL','NIL','NIL','NIL','NIL','NIL','NIL',
+        'NIL','NIL','NIL','NIL','NIL','NIL','NIL',
+        'NIL','NIL','NIL','NIL','NIL','NIL','NIL',
+        'NIL','NIL','NIL','NIL','NIL','NIL','NIL',
       ],
       npcs: [
-        '000','000','000','000','000','000','000',
-        '000','000','000','000','000','000','000',
-        '000','000','000','000','000','000','000',
-        '000','000','000','000','000','000','000',
-        '000','000','000','000','000','000','000',
-        '000','000','000','000','000','000','000',
-        '000','000','000','000','000','000','000',
+        'NIL','NIL','NIL','NIL','NIL','NIL','NIL',
+        'NIL','NIL','NIL','NIL','NIL','NIL','NIL',
+        'NIL','NIL','NIL','NIL','B01','NIL','NIL',
+        'NIL','NIL','NIL','NIL','NIL','NIL','NIL',
+        'NIL','NIL','NIL','NIL','NIL','NIL','NIL',
+        'NIL','NIL','NIL','NIL','NIL','NIL','NIL',
+        'NIL','NIL','NIL','NIL','NIL','NIL','NIL',
       ],
       cols: 7,
       rows: 7,
@@ -225,7 +224,12 @@ game = {
             })
           break;
       }
-      return self.tile_types[self.level.map[prospective_cell]].walkable
+      console.log(self.npc_types[self.level.npcs[prospective_cell]]);
+      return (
+        self.tile_types[self.level.map[prospective_cell]].walkable &&
+        self.item_types[self.level.items[prospective_cell]].walkable &&
+        self.npc_types[self.level.npcs[prospective_cell]].walkable
+      );
     },
 
     sprite: {
@@ -251,23 +255,34 @@ game = {
   },
 
   tile_types: {
+    NIL: {
+      img_path: 'empty.png',
+      walkable: true
+    },
     F00: {
-      img_path: 'floor_0010.png',
+      img_path: 'tiles/floor_0010.png',
       walkable: true
     },
     W00: {
-      img_path: 'wall_0010.png',
+      img_path: 'tiles/wall_0010.png',
       walkable: false
     }
   },
 
-  object_types: {
+  item_types: {
     NIL: {
       img_path: 'empty.png',
-      walkable: false
+      walkable: true
+    }
+  },
+
+  npc_types: {
+    NIL: {
+      img_path: 'empty.png',
+      walkable: true
     },
-    N01: {
-      img_path: '',
+    B01: {
+      img_path: 'sprites/npc/red_ball.png',
       walkable: false,
       interactable: true
     }
