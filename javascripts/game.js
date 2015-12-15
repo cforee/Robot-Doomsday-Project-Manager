@@ -75,7 +75,7 @@ game = {
         if (self.player.can_move('up')) {
           self.floormap_handle.filter(':not(:animated)').animate({
             top: '+=' + self.move_increment + 'px'
-          }, self.player.gait_slowness, function() { self.player.location.y--; });
+          }, self.player.gait_slowness, self.player.gait_animation_curve, function() { self.player.location.y--; });
         }
         break;
       case 'right':
@@ -83,7 +83,7 @@ game = {
         if (self.player.can_move('right')) {
           self.floormap_handle.filter(':not(:animated)').animate({
             left: '-=' + self.move_increment + 'px'
-          }, self.player.gait_slowness, function() { self.player.location.x++; });
+          }, self.player.gait_slowness, self.player.gait_animation_curve, function() { self.player.location.x++; });
         }
         break;
       case 'down':
@@ -91,7 +91,7 @@ game = {
         if (self.player.can_move('down')) {
           self.floormap_handle.filter(':not(:animated)').animate({
             top: '-=' + self.move_increment + 'px'
-          }, self.player.gait_slowness, function() { self.player.location.y++; });
+          }, self.player.gait_slowness, self.player.gait_animation_curve, function() { self.player.location.y++; });
         }
         break;
       case 'left':
@@ -99,7 +99,7 @@ game = {
         if (self.player.can_move('left')) {
           self.floormap_handle.filter(':not(:animated)').animate({
             left: '+=' + self.move_increment + 'px'
-          }, self.player.gait_slowness, function() { self.player.location.x--; });
+          }, self.player.gait_slowness, self.player.gait_animation_curve, function() { self.player.location.x--; });
         }
         break;
     }
@@ -183,7 +183,8 @@ game = {
   },
 
   player: {
-    gait_slowness: 300,
+    gait_slowness: 230,
+    gait_animation_curve: 'linear',
     location: {
       x: 0,
       y: 0,
