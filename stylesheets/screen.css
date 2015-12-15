@@ -78,20 +78,28 @@ body {
   height: 100%;
 }
 /* line 13, ../sass/screen.sass */
-#game-container #floormap {
+#game-container #floormap, #game-container #itemmap, #game-container #npcmap {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 100;
+}
+/* line 17, ../sass/screen.sass */
+#game-container #floormap img, #game-container #itemmap img, #game-container #npcmap img {
+  position: absolute;
 }
 /* line 19, ../sass/screen.sass */
-#game-container #npcmap {
-  position: absolute;
-  top: 0;
-  left: 0;
+#game-container #floormap {
   z-index: 100;
 }
-/* line 24, ../sass/screen.sass */
+/* line 21, ../sass/screen.sass */
+#game-container #itemmap {
+  z-index: 200;
+}
+/* line 23, ../sass/screen.sass */
+#game-container #npcmap {
+  z-index: 300;
+}
+/* line 25, ../sass/screen.sass */
 #game-container #player {
   position: absolute;
   overflow: hidden;
@@ -103,11 +111,11 @@ body {
   padding: 0;
   z-index: 300;
 }
-/* line 34, ../sass/screen.sass */
+/* line 35, ../sass/screen.sass */
 #game-container #player img {
   position: absolute;
 }
-/* line 37, ../sass/screen.sass */
+/* line 38, ../sass/screen.sass */
 #game-container .tile {
   display: inline-block;
   width: 320px;

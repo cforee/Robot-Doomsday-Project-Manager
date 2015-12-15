@@ -20,9 +20,11 @@ game = {
   init_level: function(level_name) {
 
     // init all the things
-    this.container_handle = $('#game-container');
-    this.floormap_handle = $('#floormap');
-    this.player_handle = $('#player');
+    this.container_handle         = $('#game-container');
+    this.floormap_handle          = $('#floormap');
+    this.player_handle            = $('#player');
+    this.itemmap_handle           = $('#itemmap');
+    this.npcmap_handle            = $('#npcmap');
 
     // set current level
     this.level = this.levels[level_name];
@@ -38,6 +40,8 @@ game = {
     this.player.location.y = this.level.start_position.y;
 
     this.center_player();
+
+    this.pygmalionize_npcs();
   },
 
   start: function() {
@@ -117,9 +121,13 @@ game = {
 
   draw_level: function() {
     for(n = 0; n < this.level.map.length; n++) {
-      this.floormap_handle.append('<div class="tile"><img src="images/' + this.tile_types[this.level.map[n]].img_path + '" /></div>');
-      this.itemmap_handle.append('<div class="tile"><img src="images/' + this.item_types[this.level.items[n]].img_path + '" /></div>');
-      this.npcmap_handle.append('<div class="tile"><img src="images/' + this.npc_types[this.level.npcs[n]].img_path + '" /></div>');
+      sprite_class = '';
+      if (this.level.npcs[n] !== 'NIL') {
+        sprite_class = 'npc ' + this.level.npcs[n];
+      }
+      this.floormap_handle.append('<div class="tile"><img src="images/' +  this.tile_types[this.level.map[n]].img_path    + '" /></div>');
+      this.itemmap_handle.append( '<div class="tile"><img src="images/' +  this.item_types[this.level.items[n]].img_path  + '" /></div>');
+      this.npcmap_handle.append(  '<div class="tile"><img class="' + sprite_class + '" src="images/' +  this.npc_types[this.level.npcs[n]].img_path    + '" /></div>');
     }
   },
 
@@ -130,7 +138,12 @@ game = {
     this.player_handle.css('top',viewport_relative_y + 'px');
   },
 
-
+  pygmalionize_npcs: function() {
+    // TODO: make this work - animate all npcs
+    tiles = this.npcmap_handle.find('div').toArray();
+    $(tiles[0]).css('border','3px solid red');
+    console.log(tiles);
+  },
 
   // define all levels here
   levels: {
@@ -224,7 +237,6 @@ game = {
             })
           break;
       }
-      console.log(self.npc_types[self.level.npcs[prospective_cell]]);
       return (
         self.tile_types[self.level.map[prospective_cell]].walkable &&
         self.item_types[self.level.items[prospective_cell]].walkable &&
@@ -282,9 +294,10 @@ game = {
       walkable: true
     },
     B01: {
-      img_path: 'sprites/npc/red_ball.png',
+      img_path: 'sprites/npc/red_balloon.png',
       walkable: false,
-      interactable: true
+      interactable: true,
+      frames: 4
     }
   }
 
