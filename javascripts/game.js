@@ -37,7 +37,6 @@ game = {
     this.player.location.y = this.level.start_position.y;
 
     this.center_player();
-
   },
 
   start: function() {
@@ -74,37 +73,33 @@ game = {
       case 'up':
         self.player.sprite.img_path = 'images/sprites/player/walk_up.png';
         if (self.player.can_move('up')) {
-          self.player.location.y--;
-          self.floormap_handle.animate({
+          self.floormap_handle.filter(':not(:animated)').animate({
             top: '+=' + self.move_increment + 'px'
-          });
+          }, self.player.gait_slowness, function() { self.player.location.y--; });
         }
         break;
       case 'right':
         self.player.sprite.img_path = 'images/sprites/player/walk_right.png';
         if (self.player.can_move('right')) {
-          self.player.location.x++;
-          self.floormap_handle.animate({
+          self.floormap_handle.filter(':not(:animated)').animate({
             left: '-=' + self.move_increment + 'px'
-          });
+          }, self.player.gait_slowness, function() { self.player.location.x++; });
         }
         break;
       case 'down':
         self.player.sprite.img_path = 'images/sprites/player/walk_down.png';
         if (self.player.can_move('down')) {
-          self.player.location.y++;
-          self.floormap_handle.animate({
+          self.floormap_handle.filter(':not(:animated)').animate({
             top: '-=' + self.move_increment + 'px'
-          });
+          }, self.player.gait_slowness, function() { self.player.location.y++; });
         }
         break;
       case 'left':
         self.player.sprite.img_path = 'images/sprites/player/walk_left.png';
         if (self.player.can_move('left')) {
-          self.player.location.x--;
-          self.floormap_handle.animate({
+          self.floormap_handle.filter(':not(:animated)').animate({
             left: '+=' + self.move_increment + 'px'
-          });
+          }, self.player.gait_slowness, function() { self.player.location.x--; });
         }
         break;
     }
@@ -117,7 +112,6 @@ game = {
     new_y = -(y * this.level.tile_diameter) + viewport_adjustment_y;
     this.floormap_handle.css('left', new_x + 'px');
     this.floormap_handle.css('top',  new_y + 'px');
-
   },
 
   draw_level: function() {
@@ -128,7 +122,6 @@ game = {
         + '" /></div>'
       );
     }
-
   },
 
   center_player: function() {
@@ -136,8 +129,9 @@ game = {
     viewport_relative_y = (this.container_handle.height() / 2) - (this.player_handle.height() / 2);
     this.player_handle.css('left', viewport_relative_x + 'px');
     this.player_handle.css('top',viewport_relative_y + 'px');
-
   },
+
+
 
   // define all levels here
   levels: {
@@ -189,6 +183,7 @@ game = {
   },
 
   player: {
+    gait_slowness: 300,
     location: {
       x: 0,
       y: 0,
