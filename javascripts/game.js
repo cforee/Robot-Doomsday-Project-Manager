@@ -85,6 +85,9 @@ game = {
             }
           });
           break;
+        case self.keys.attack:
+          // TODO: add attack handlers
+          break;
       }
     });
   },
@@ -212,6 +215,8 @@ game = {
   show_dialogue: function(obj) {
     this.dialogue_overlay_handle.fadeIn(300);
     this.dialogue_overlay_handle.html(obj.name);
+
+    // TODO: run dialogue tree for NPC inside dialogue overlay box
   },
 
   hide_dialogue: function() {
