@@ -1,75 +1,10 @@
-/* line 5, ../../../../.rvm/gems/ruby-2.1.4/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font: inherit;
-  font-size: 100%;
-  vertical-align: baseline;
-}
-
-/* line 22, ../../../../.rvm/gems/ruby-2.1.4/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-html {
-  line-height: 1;
-}
-
-/* line 24, ../../../../.rvm/gems/ruby-2.1.4/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-ol, ul {
-  list-style: none;
-}
-
-/* line 26, ../../../../.rvm/gems/ruby-2.1.4/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-/* line 28, ../../../../.rvm/gems/ruby-2.1.4/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-caption, th, td {
-  text-align: left;
-  font-weight: normal;
-  vertical-align: middle;
-}
-
-/* line 30, ../../../../.rvm/gems/ruby-2.1.4/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-q, blockquote {
-  quotes: none;
-}
-/* line 103, ../../../../.rvm/gems/ruby-2.1.4/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-q:before, q:after, blockquote:before, blockquote:after {
-  content: "";
-  content: none;
-}
-
-/* line 32, ../../../../.rvm/gems/ruby-2.1.4/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-a img {
-  border: none;
-}
-
-/* line 116, ../../../../.rvm/gems/ruby-2.1.4/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
-  display: block;
-}
-
 /* line 3, ../sass/screen.sass */
 body {
   background: #000;
 }
 
 /* line 6, ../sass/screen.sass */
-#game-container {
+#map-container {
   position: absolute;
   overflow: hidden;
   top: 0;
@@ -78,29 +13,29 @@ body {
   height: 100%;
 }
 /* line 13, ../sass/screen.sass */
-#game-container #floormap, #game-container #itemmap, #game-container #npcmap {
+#map-container #floormap, #map-container #itemmap, #map-container #npcmap, #map-container #dialogue-overlay {
   position: absolute;
   top: 0;
   left: 0;
 }
 /* line 17, ../sass/screen.sass */
-#game-container #floormap img, #game-container #itemmap img, #game-container #npcmap img {
+#map-container #floormap img, #map-container #itemmap img, #map-container #npcmap img, #map-container #dialogue-overlay img {
   position: absolute;
 }
 /* line 19, ../sass/screen.sass */
-#game-container #floormap {
+#map-container #floormap {
   z-index: 100;
 }
 /* line 21, ../sass/screen.sass */
-#game-container #itemmap {
+#map-container #itemmap {
   z-index: 200;
 }
 /* line 23, ../sass/screen.sass */
-#game-container #npcmap {
+#map-container #npcmap {
   z-index: 300;
 }
 /* line 25, ../sass/screen.sass */
-#game-container #player {
+#map-container #player {
   position: absolute;
   overflow: hidden;
   width: 320px;
@@ -112,11 +47,11 @@ body {
   z-index: 300;
 }
 /* line 35, ../sass/screen.sass */
-#game-container #player img {
+#map-container #player img {
   position: absolute;
 }
 /* line 38, ../sass/screen.sass */
-#game-container .tile, #game-container .mtile {
+#map-container .tile, #map-container .mtile {
   width: 320px;
   height: 320px;
   overflow: hidden;
@@ -124,11 +59,34 @@ body {
   padding: 0;
 }
 /* line 44, ../sass/screen.sass */
-#game-container .tile {
+#map-container .tile {
   position: relative;
   display: inline-block;
 }
 /* line 47, ../sass/screen.sass */
-#game-container .mtile {
+#map-container .mtile {
   position: absolute;
+}
+
+/* line 50, ../sass/screen.sass */
+#dialogue-overlay {
+  position: absolute;
+  z-index: 400;
+  bottom: 2%;
+  left: 50%;
+  margin-left: -45%;
+  border: 1px solid #ccc;
+  background: #000;
+  width: 89%;
+  min-height: 20%;
+  padding: 0.4em 0.8em;
+  color: #fff;
+  font-size: 6em;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  -moz-box-shadow: #000 0px 0px 6px 0px;
+  -webkit-box-shadow: #000 0px 0px 6px 0px;
+  box-shadow: #000 0px 0px 6px 0px;
+  display: none;
 }

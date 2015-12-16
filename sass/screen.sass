@@ -1,16 +1,16 @@
-@import compass/reset
+@import compass
 
 body
   background: #000
 
-#game-container
+#map-container
   position: absolute
   overflow: hidden
   top: 0
   left: 0
   width: 100%
   height: 100%
-  #floormap, #itemmap, #npcmap
+  #floormap, #itemmap, #npcmap, #dialogue-overlay
     position: absolute
     top: 0
     left: 0
@@ -46,4 +46,21 @@ body
     display: inline-block
   .mtile
     position: absolute
+
+#dialogue-overlay
+  position: absolute
+  z-index: 400
+  bottom: 2%
+  left: 50%
+  margin-left: -45%
+  border: 1px solid #ccc
+  background: #000
+  width: 89%
+  min-height: 20%
+  padding: .4em .8em
+  color: #fff
+  font-size: 6em
+  @include border-radius(4px)
+  @include box-shadow(#000 0px 0px 6px 0px)
+  display: none
 

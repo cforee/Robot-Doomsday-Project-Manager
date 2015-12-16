@@ -7,11 +7,12 @@ $(function() {
 
 game = {
 
-  container_handle: $('#game-container'),
+  container_handle: $('#map-container'),
   floormap_handle: $('#floormap'),
   npcmap_handle: $('#npcmap'),
   itemmap_handle: $('#itemmap'),
   player_handle: $('#player'),
+  dialogue_overlay_handle: $('#dialogue-overlay'),
   level: null,
   real_map_width: null,
   real_map_height: null,
@@ -20,11 +21,12 @@ game = {
   init_level: function(level_name) {
 
     // init all the things
-    this.container_handle         = $('#game-container');
-    this.floormap_handle          = $('#floormap');
-    this.npcmap_handle            = $('#npcmap');
-    this.player_handle            = $('#player');
-    this.itemmap_handle           = $('#itemmap');
+    this.container_handle                   = $('#map-container');
+    this.floormap_handle                    = $('#floormap');
+    this.npcmap_handle                      = $('#npcmap');
+    this.player_handle                      = $('#player');
+    this.itemmap_handle                     = $('#itemmap');
+    this.dialogue_overlay_handle            = $('#dialogue-overlay');
 
     // set current level
     this.level = levels[level_name];
@@ -40,7 +42,6 @@ game = {
     // set npc map h/w
     this.npcmap_handle.css('width', this.real_map_width + 'px');
     this.npcmap_handle.css('height', this.real_map_height + 'px');
-
 
     this.set_floor_position(this.level.start_position.x, this.level.start_position.y);
     this.player.location.x = this.level.start_position.x;
@@ -80,7 +81,7 @@ game = {
         case self.keys.interact:
           $.each(self.level.npcs, function(i, obj) {
             if (self.player.is_facing(obj)) {
-              console.log('facing ' + obj.name);
+              self.show_dialogue(obj);
             }
           });
           break;
@@ -90,6 +91,9 @@ game = {
 
   move_player: function(direction) {
     self = this;
+
+    // hide dialogue box on attempted move
+    self.hide_dialogue();
 
     // track which direction the player is facing
     self.player.direction = direction
@@ -204,6 +208,17 @@ game = {
     }, obj.framerate);
 
   },
+
+  show_dialogue: function(obj) {
+    this.dialogue_overlay_handle.fadeIn(300);
+    this.dialogue_overlay_handle.html(obj.name);
+  },
+
+  hide_dialogue: function() {
+    this.dialogue_overlay_handle.fadeOut(300);
+  },
+
+
 
 
 
