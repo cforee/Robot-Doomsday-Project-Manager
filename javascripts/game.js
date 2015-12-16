@@ -70,7 +70,11 @@ game = {
           self.move_player('left');
           break;
         case self.keys.interact:
-          console.log('interacting!');
+          $.each(self.level.npcs, function(i, obj) {
+            if (self.player.is_facing(obj)) {
+              console.log('facing ' + obj.name);
+            }
+          });
           break;
       }
     });
@@ -130,11 +134,9 @@ game = {
   draw_level: function() {
     self = this;
     for(n = 0; n < this.level.map.length; n++) {
-      // append tiles
       this.floormap_handle.append('<div class="tile"><img src="images/' +  this.tile_types[this.level.map[n]].img_path    + '" /></div>');
     }
     $.each(this.level.npcs, function(i,obj) {
-      // append npc mtiles
       self.npcmap_handle.append('<div class="mtile" id="' + obj.ref + '"><img src="images/sprites/' + obj.img_path + '" /></div>');
 
       // position mtiles
@@ -149,7 +151,7 @@ game = {
       // set the tile occupied if walkable == false
       if (!obj.walkable) {
         self.level.occupied_tiles.push(
-          self.get_cell(
+          self.get_tile(
             {
               x: obj.position.x,
               y: obj.position.y
@@ -157,6 +159,7 @@ game = {
           )
         );
       }
+
     });
   },
 
@@ -167,7 +170,7 @@ game = {
     this.player_handle.css('top',viewport_relative_y + 'px');
   },
 
-  get_cell: function(coords) {
+  get_tile: function(coords) {
     cell_num = (coords.y * self.level.cols) + coords.x;
     return cell_num;
   },
@@ -249,38 +252,69 @@ game = {
     can_move: function(direction) {
       switch(direction) {
         case 'up':
-          prospective_cell = self.get_cell({
+          prospective_tile = self.get_tile({
               x: self.player.location.x,
               y: self.player.location.y - 1
             })
           break;
         case 'right':
-          prospective_cell = self.get_cell({
+          prospective_tile = self.get_tile({
               x: self.player.location.x + 1,
               y: self.player.location.y
             })
           break;
         case 'down':
-          prospective_cell = self.get_cell({
+          prospective_tile = self.get_tile({
               x: self.player.location.x,
               y: self.player.location.y + 1
             })
           break;
         case 'left':
-          prospective_cell = self.get_cell({
+          prospective_tile = self.get_tile({
               x: self.player.location.x - 1,
               y: self.player.location.y
             })
           break;
       }
-      return this.tile_walkable(prospective_cell);
+      return this.tile_walkable(prospective_tile);
     },
 
     tile_walkable: function(cell) {
       return(
-        self.tile_types[self.level.map[prospective_cell]].walkable &&
-        ($.inArray(prospective_cell, self.level.occupied_tiles) === -1)
+        self.tile_types[self.level.map[prospective_tile]].walkable &&
+        ($.inArray(prospective_tile, self.level.occupied_tiles) === -1)
       )
+    },
+
+    is_facing: function(target_obj) {
+      switch(self.player.direction) {
+        case 'up':
+          prospective_tile = self.get_tile({
+              x: self.player.location.x,
+              y: self.player.location.y - 1
+            })
+          break;
+        case 'right':
+          prospective_tile = self.get_tile({
+              x: self.player.location.x + 1,
+              y: self.player.location.y
+            })
+          break;
+        case 'down':
+          prospective_tile = self.get_tile({
+              x: self.player.location.x,
+              y: self.player.location.y + 1
+            })
+          break;
+        case 'left':
+          prospective_tile = self.get_tile({
+              x: self.player.location.x - 1,
+              y: self.player.location.y
+            })
+          break;
+      }
+      target_tile = self.get_tile({ x: target_obj.position.x, y: target_obj.position.y })
+      return (prospective_tile == target_tile)
     },
 
     sprite: {
@@ -319,19 +353,5 @@ game = {
       walkable: false
     }
   },
-
-  item_types: {
-    NIL: {
-      img_path: 'empty.png',
-      walkable: true
-    }
-  },
-
-  npc_types: {
-    NIL: {
-      img_path: 'empty.png',
-      walkable: true
-    }
-  }
 
 }
