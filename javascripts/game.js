@@ -79,6 +79,9 @@ game = {
   move_player: function(direction) {
     self = this;
 
+    // track which direction the player is facing
+    self.player.direction = direction
+
     switch(direction) {
       case 'up':
         self.player.sprite.img_path = 'images/sprites/player/walk_up.png';
@@ -237,6 +240,7 @@ game = {
   player: {
     gait_slowness: 230,
     gait_animation_curve: 'linear',
+    direction: 'down',
     location: {
       x: 0,
       y: 0,
