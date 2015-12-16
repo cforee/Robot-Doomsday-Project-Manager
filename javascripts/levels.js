@@ -32,8 +32,22 @@ levels = {
           x: 18,
           y: 4
         },
-        ref: 'REDBALLOON',
+        ref: 'red_balloon',
         name: 'Red Balloon',
+        img_path: 'npc/red_balloon.png',
+        diameter: 320,
+        framerate: 100,
+        num_frames: 4,
+        walkable: false,
+        movement_pattern: false,
+      },
+      {
+        position: {
+          x: 2,
+          y: 4
+        },
+        ref: 'red_zalloon',
+        name: 'Red zalloon',
         img_path: 'npc/red_balloon.png',
         diameter: 320,
         framerate: 100,

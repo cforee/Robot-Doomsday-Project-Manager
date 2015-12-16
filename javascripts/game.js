@@ -47,6 +47,14 @@ game = {
     this.player.location.y = this.level.start_position.y;
 
     this.center_player();
+
+    self = this;
+    setTimeout(function() {
+      $.each(self.level.npcs, function(i,obj) {
+        self.cycle_npc_frames(obj)
+      });
+    }, 500);
+
   },
 
   start: function() {
@@ -137,7 +145,7 @@ game = {
       this.floormap_handle.append('<div class="tile"><img src="images/' +  this.tile_types[this.level.map[n]].img_path    + '" /></div>');
     }
     $.each(this.level.npcs, function(i,obj) {
-      self.npcmap_handle.append('<div class="mtile" id="' + obj.ref + '"><img src="images/sprites/' + obj.img_path + '" /></div>');
+      self.npcmap_handle.append('<div class="mtile" id="' + obj.ref + '"><img id="' + 'spritesheet-' + obj.ref + '" src="images/sprites/' + obj.img_path + '" /></div>');
 
       // position mtiles
       relative_x = obj.position.x * obj.diameter;
@@ -182,6 +190,24 @@ game = {
     left: 37,
     interact: 69
   },
+
+  cycle_npc_frames: function(obj) {
+    var sprite_sheet_handle = $('#spritesheet-' + obj.ref);
+
+    setInterval(function() {
+      if (n >= obj.num_frames) {
+        n = 0;
+      }
+      sprite_sheet_handle.attr('src', 'images/sprites/' + obj.img_path);
+      sprite_sheet_handle.css('left', -(n * 320) + 'px');
+      n++;
+    }, obj.framerate);
+
+  },
+
+
+
+  // player object
 
   player: {
     gait_slowness: 230,
@@ -266,7 +292,7 @@ game = {
       framerate: 100,
       num_frames: 4,
 
-      cycle_frames: function(current_frame) {
+      cycle_frames: function() {
         sprite_sheet_handle = $('#spritesheet-player');
 
         setInterval(function() {
