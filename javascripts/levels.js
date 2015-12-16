@@ -35,6 +35,7 @@ levels = {
         ref: 'red_balloon',
         name: 'Red Balloon',
         img_path: 'npc/red_balloon.png',
+        dialogue_root: 'content/dialogue/npc/red_balloon.json',
         diameter: 320,
         framerate: 100,
         num_frames: 4,
@@ -47,8 +48,9 @@ levels = {
           y: 4
         },
         ref: 'red_zalloon',
-        name: 'Red zalloon',
+        name: 'Red Zalloon',
         img_path: 'npc/red_balloon.png',
+        dialogue_root: 'content/dialogue/npc/red_zalloon.json',
         diameter: 320,
         framerate: 100,
         num_frames: 4,
