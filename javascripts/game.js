@@ -9,8 +9,8 @@ game = {
 
   container_handle: $('#game-container'),
   floormap_handle: $('#floormap'),
+  npcmap_handle: $('#npcmap'),
   itemmap_handle: $('#itemmap'),
-  npcmap_handle: $('#npcsmap'),
   player_handle: $('#player'),
   level: null,
   real_map_width: null,
@@ -22,26 +22,31 @@ game = {
     // init all the things
     this.container_handle         = $('#game-container');
     this.floormap_handle          = $('#floormap');
+    this.npcmap_handle            = $('#npcmap');
     this.player_handle            = $('#player');
     this.itemmap_handle           = $('#itemmap');
-    this.npcmap_handle            = $('#npcmap');
 
     // set current level
     this.level = this.levels[level_name];
 
-    // set real floormap width and height, and update DOM
+    // get real floormap width and height
     this.real_map_width = this.level.tile_diameter * this.level.cols;
     this.real_map_height = this.level.tile_diameter * this.level.rows;
+
+    // set floor map h/w
     this.floormap_handle.css('width', this.real_map_width + 'px');
     this.floormap_handle.css('height', this.real_map_height + 'px');
+
+    // set npc map h/w
+    this.npcmap_handle.css('width', this.real_map_width + 'px');
+    this.npcmap_handle.css('height', this.real_map_height + 'px');
+
 
     this.set_floor_position(this.level.start_position.x, this.level.start_position.y);
     this.player.location.x = this.level.start_position.x;
     this.player.location.y = this.level.start_position.y;
 
     this.center_player();
-
-    this.pygmalionize_npcs();
   },
 
   start: function() {
@@ -120,15 +125,36 @@ game = {
   },
 
   draw_level: function() {
+    self = this;
     for(n = 0; n < this.level.map.length; n++) {
-      sprite_class = '';
-      if (this.level.npcs[n] !== 'NIL') {
-        sprite_class = 'npc ' + this.level.npcs[n];
-      }
+      // append tiles
       this.floormap_handle.append('<div class="tile"><img src="images/' +  this.tile_types[this.level.map[n]].img_path    + '" /></div>');
-      this.itemmap_handle.append( '<div class="tile"><img src="images/' +  this.item_types[this.level.items[n]].img_path  + '" /></div>');
-      this.npcmap_handle.append(  '<div class="tile"><img class="' + sprite_class + '" src="images/' +  this.npc_types[this.level.npcs[n]].img_path    + '" /></div>');
     }
+    $.each(this.level.npcs, function(i,obj) {
+      // append npc mtiles
+      self.npcmap_handle.append('<div class="mtile" id="' + obj.ref + '"><img src="images/sprites/' + obj.img_path + '" /></div>');
+
+      // position mtiles
+      relative_x = obj.position.x * obj.diameter;
+      relative_y = obj.position.y * obj.diameter;
+      this_npc_handle = $('#'+obj.ref);
+      this_npc_handle.css({
+        'left': relative_x + 'px',
+        'top':  relative_y + 'px'
+      });
+
+      // set the tile occupied if walkable == false
+      if (!obj.walkable) {
+        self.level.occupied_tiles.push(
+          self.get_cell(
+            {
+              x: obj.position.x,
+              y: obj.position.y
+            }
+          )
+        );
+      }
+    });
   },
 
   center_player: function() {
@@ -138,11 +164,9 @@ game = {
     this.player_handle.css('top',viewport_relative_y + 'px');
   },
 
-  pygmalionize_npcs: function() {
-    // TODO: make this work - animate all npcs
-    tiles = this.npcmap_handle.find('div').toArray();
-    $(tiles[0]).css('border','3px solid red');
-    console.log(tiles);
+  get_cell: function(coords) {
+    cell_num = (coords.y * self.level.cols) + coords.x;
+    return cell_num;
   },
 
   // define all levels here
@@ -172,51 +196,25 @@ game = {
         'W00','W00','W00','W00','W00','W00','W00','W00','W00','W00','W00','W00','W00','W00','W00','W00','W00','W00','W00','W00','W00',
       ],
       items: [
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
+
       ],
       npcs: [
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','B01','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','B01','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','B01','NIL',
-        'NIL','NIL','NIL','B01','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','B01','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','B01','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','B01','NIL',
-        'NIL','NIL','B01','NIL','B01','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','B01','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','B01','NIL','NIL','NIL','B01','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','B01','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','B01','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','B01','NIL','NIL','NIL','B01','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','B01','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','B01','NIL','NIL','NIL','NIL','B01','NIL','NIL','NIL','B01','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','B01','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
-        'NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL','NIL',
+        {
+          position: {
+            x: 18,
+            y: 4
+          },
+          ref: 'REDBALLOON',
+          name: 'Red Balloon',
+          img_path: 'npc/red_balloon.png',
+          diameter: 320,
+          framerate: 100,
+          num_frames: 4,
+          walkable: false,
+          movement_pattern: false,
+        },
       ],
+      occupied_tiles: [],
       cols: 21,
       rows: 21,
       tile_diameter: 320,
@@ -242,48 +240,43 @@ game = {
     location: {
       x: 0,
       y: 0,
-      get_cell: function(coords) {
-        cell_num = (coords.y * self.level.cols) + coords.x;
-        return cell_num;
-      }
     },
 
     can_move: function(direction) {
       switch(direction) {
         case 'up':
-          prospective_cell = self.player.location
-            .get_cell({
+          prospective_cell = self.get_cell({
               x: self.player.location.x,
               y: self.player.location.y - 1
             })
           break;
         case 'right':
-          prospective_cell = self.player.location
-            .get_cell({
+          prospective_cell = self.get_cell({
               x: self.player.location.x + 1,
               y: self.player.location.y
             })
           break;
         case 'down':
-          prospective_cell = self.player.location
-            .get_cell({
+          prospective_cell = self.get_cell({
               x: self.player.location.x,
               y: self.player.location.y + 1
             })
           break;
         case 'left':
-          prospective_cell = self.player.location
-            .get_cell({
+          prospective_cell = self.get_cell({
               x: self.player.location.x - 1,
               y: self.player.location.y
             })
           break;
       }
-      return (
+      return this.tile_walkable(prospective_cell);
+    },
+
+    tile_walkable: function(cell) {
+      return(
         self.tile_types[self.level.map[prospective_cell]].walkable &&
-        self.item_types[self.level.items[prospective_cell]].walkable &&
-        self.npc_types[self.level.npcs[prospective_cell]].walkable
-      );
+        ($.inArray(prospective_cell, self.level.occupied_tiles) === -1)
+      )
     },
 
     sprite: {
@@ -334,12 +327,6 @@ game = {
     NIL: {
       img_path: 'empty.png',
       walkable: true
-    },
-    B01: {
-      img_path: 'sprites/npc/red_balloon_single_frame.png',
-      walkable: true,
-      interactable: true,
-      frames: 4
     }
   }
 

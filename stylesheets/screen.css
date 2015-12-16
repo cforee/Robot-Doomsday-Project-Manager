@@ -116,12 +116,19 @@ body {
   position: absolute;
 }
 /* line 38, ../sass/screen.sass */
-#game-container .tile {
-  display: inline-block;
+#game-container .tile, #game-container .mtile {
   width: 320px;
   height: 320px;
   overflow: hidden;
   margin: 0;
   padding: 0;
-  z-index: 20;
+}
+/* line 44, ../sass/screen.sass */
+#game-container .tile {
+  position: relative;
+  display: inline-block;
+}
+/* line 47, ../sass/screen.sass */
+#game-container .mtile {
+  position: absolute;
 }
