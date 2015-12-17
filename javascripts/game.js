@@ -46,6 +46,8 @@ game = {
     this.player.location.x = this.level.start_position.x;
     this.player.location.y = this.level.start_position.y;
 
+    this.player.direction = this.level.start_direction;
+
     this.center_player();
 
     self = this;
@@ -257,7 +259,7 @@ game = {
   player: {
     gait_slowness: 230,
     gait_animation_curve: 'linear',
-    direction: 'down',
+    direction: 'up',
     location: {
       x: 0,
       y: 0,
@@ -361,6 +363,10 @@ game = {
     F00: {
       img_path: 'tiles/floor_0030.png',
       walkable: true
+    },
+    W10: {
+      img_path: 'tiles/floor_and_plant_0010.png',
+      walkable: false
     },
     W00: {
       img_path: 'tiles/wall_0030.png',
