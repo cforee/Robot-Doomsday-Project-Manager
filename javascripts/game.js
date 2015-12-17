@@ -4,7 +4,6 @@ $(function() {
   game.start();
 });
 
-
 game = {
 
   container_handle: $('#map-container'),
@@ -81,7 +80,7 @@ game = {
         case self.keys.interact:
           $.each(self.level.npcs, function(i, obj) {
             if (self.player.is_facing(obj)) {
-              self.show_dialogue(obj);
+              self.draw_dialogue(0, obj);
             }
           });
           break;
@@ -212,19 +211,41 @@ game = {
 
   },
 
-  show_dialogue: function(obj) {
-    this.dialogue_overlay_handle.fadeIn(300);
-    this.dialogue_overlay_handle.html(obj.name);
-
-    // TODO: run dialogue tree for NPC inside dialogue overlay box
-  },
-
   hide_dialogue: function() {
     this.dialogue_overlay_handle.fadeOut(300);
   },
 
+  draw_dialogue: function(current, interlocutor) {
+    self = this;
+    this.dialogue_overlay_handle.fadeIn(300);
 
+    dialogues = interlocutor.dialogue_tree;
 
+    $('#interlocutor').html('<h2>' + interlocutor.name + '</h2>');
+
+    if (dialogues[current].text.length > 1) {
+      $('#dialogue').html('');
+      $('#dialogue').html(dialogues[current].text);
+    }
+    var response_set = []
+    $.each(dialogues[current].responses, function() {
+      if (parseInt(this.next) === 0) {
+        response_set.push('<a class="response" href="http://www.google.com">' + this.text + '</a>');
+      } else {
+        response_set.push('<a class="response">' + this.text + '</a>');
+      }
+    });
+    $('#options').html(response_set);
+    $('.response').on('click', function() {
+      choice = $('.response').index(this);
+      $.map(dialogues, function(obj) {
+        if (obj.id === parseInt(dialogues[current].responses[choice].next)) {
+          var next = $(dialogues).index(obj);
+          self.draw_dialogue(next, interlocutor);
+        }
+      });
+    });
+  },
 
 
   // player object

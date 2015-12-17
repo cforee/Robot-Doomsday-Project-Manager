@@ -49,6 +49,9 @@ body
 
 #dialogue-overlay
   position: absolute
+  font-family: 'Share Tech Mono'
+  letter-spacing: -2px
+  font-weight: 0
   z-index: 400
   bottom: 2%
   left: 50%
@@ -59,8 +62,20 @@ body
   min-height: 20%
   padding: .4em .8em
   color: #fff
-  font-size: 6em
+  font-size: 21px
   @include border-radius(4px)
   @include box-shadow(#000 0px 0px 6px 0px)
   display: none
+  #dialogue
+    margin-top: 8px
+  #options
+    margin-top: 13px
+    .response
+      display: block
+      color: #00aacc
+      margin-bottom: 8px
+  h2
+    font-size: 27px
+    margin: 0
+    padding: 0
 
