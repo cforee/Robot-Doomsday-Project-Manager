@@ -71,9 +71,10 @@ body {
 /* line 50, ../sass/screen.sass */
 #dialogue-overlay {
   position: absolute;
-  font-family: "Share Tech Mono";
+  font-family: "Press Start 2P", cursive;
   letter-spacing: -2px;
   font-weight: 0;
+  line-height: 1.6em;
   z-index: 400;
   bottom: 2%;
   left: 50%;
@@ -95,21 +96,21 @@ body {
   opacity: 0.8;
   display: none;
 }
-/* line 70, ../sass/screen.sass */
+/* line 72, ../sass/screen.sass */
 #dialogue-overlay #dialogue {
   margin-top: 8px;
 }
-/* line 72, ../sass/screen.sass */
+/* line 74, ../sass/screen.sass */
 #dialogue-overlay #options {
   margin-top: 13px;
 }
-/* line 74, ../sass/screen.sass */
+/* line 76, ../sass/screen.sass */
 #dialogue-overlay #options .response {
   display: block;
   color: #00aacc;
   margin-bottom: 8px;
 }
-/* line 78, ../sass/screen.sass */
+/* line 80, ../sass/screen.sass */
 #dialogue-overlay h2 {
   font-size: 27px;
   margin: 0;

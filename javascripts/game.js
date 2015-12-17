@@ -236,7 +236,7 @@ game = {
       }
     });
     $('#options').html(response_set);
-    $('.response').on('click', function() {
+    $('.response').on('click keydown', function() {
       self.dialogue_overlay_handle.hide();
       choice = $('.response').index(this);
       $.map(dialogues, function(obj) {
@@ -248,6 +248,8 @@ game = {
       });
     });
   },
+
+
 
 
   // player object
