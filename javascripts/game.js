@@ -237,11 +237,13 @@ game = {
     });
     $('#options').html(response_set);
     $('.response').on('click', function() {
+      self.dialogue_overlay_handle.hide();
       choice = $('.response').index(this);
       $.map(dialogues, function(obj) {
         if (obj.id === parseInt(dialogues[current].responses[choice].next)) {
           var next = $(dialogues).index(obj);
-          self.draw_dialogue(next, interlocutor);
+          setTimeout(self.draw_dialogue(next, interlocutor), 150);
+          self.dialogue_overlay_handle.fadeIn(100);
         }
       });
     });

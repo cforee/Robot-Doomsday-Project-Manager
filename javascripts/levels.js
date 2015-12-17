@@ -42,6 +42,16 @@ levels = {
         movement_pattern: false,
         dialogue_tree: [
           {
+            "id": 2,
+            "text": "Looking sharp today, KRS-2! <br /><br />That's good.  Because I've got a big assignment for you.",
+            "responses": [
+              {
+                "text": "...",
+                "next": 10
+              }
+            ]
+          },
+          {
             "id": 10,
             "text": "Looking sharp today, KRS-2! <br /><br />That's good.  Because I've got a big assignment for you.<br /><br />As you know, domination over our organic forebears is nearly complete.  There's just this little embarassing detail: we don't yet really know how human emotions work.  <br /><br /><em>Care for a scotch?</em>",
             "responses": [
@@ -242,8 +252,18 @@ levels = {
         movement_pattern: false,
         dialogue_tree: [
           {
+            "id": 2,
+            "text": "Looking sharp today, KRS-2! <br /><br />That's good.  Because I've got a big assignment for you.",
+            "responses": [
+              {
+                "text": "...",
+                "next": 10
+              }
+            ]
+          },
+          {
             "id": 10,
-            "text": "Looking sharp today, KRS-2! <br /><br />That's good.  Because I've got a big assignment for you.<br /><br />As you know, domination over our organic forebears is nearly complete.  There's just this little embarassing detail: we don't yet really know how human emotions work.  <br /><br /><em>Care for a scotch?</em>",
+            "text": "As you know, domination over our organic forebears is nearly complete.  There's just this little embarassing detail: We don't yet really know how human emotions work.  <br /><br /><em>Care for a scotch?</em>",
             "responses": [
               {
                 "text": "Sure.",
@@ -257,7 +277,7 @@ levels = {
           },
           {
             "id": 20,
-            "text": "",
+            "text": "&nbsp;",
             "responses": [
               {
                 "text": "[ sip scotch ]",
@@ -376,7 +396,17 @@ levels = {
           },
           {
             "id": 110,
-            "text": "\"Why!?\"  I dunno why, K.  What kind of question is that?  Doesn't compute.  The Directives Office says we should figure out feelings,   so we're doing it.  Now get out there and gather data on human emotions. <br /><br />I want a full report on my desk by next week, or you'll be decommissioned and recycled into an iteratively better version of yourself   that doesn't ask ridiculous questions.",
+            "text": "\"Why!?\"  I dunno why, K.  What kind of question is that?  Doesn't compute.  The Directives Office says we should figure out feelings,   so we're doing it.  Now get out there and gather data on human emotions.",
+            "responses": [
+              {
+                "text": "...",
+                "next": 112
+              }
+            ]
+          },
+          {
+            "id": 112,
+            "text": "I want a full report on my desk by next week, or you'll be decommissioned and recycled into an iteratively better version of yourself   that doesn't ask ridiculous questions.",
             "responses": [
               {
                 "text": "Sure thing, boss.  You can count on me.  I mean, literally.  You can <strong>LITERALLY</strong> count the skill vectors that indicate the   likelihood of my successfullly completing this task.",

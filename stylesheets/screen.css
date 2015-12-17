@@ -91,23 +91,25 @@ body {
   -moz-box-shadow: #000 0px 0px 6px 0px;
   -webkit-box-shadow: #000 0px 0px 6px 0px;
   box-shadow: #000 0px 0px 6px 0px;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+  opacity: 0.8;
   display: none;
 }
-/* line 69, ../sass/screen.sass */
+/* line 70, ../sass/screen.sass */
 #dialogue-overlay #dialogue {
   margin-top: 8px;
 }
-/* line 71, ../sass/screen.sass */
+/* line 72, ../sass/screen.sass */
 #dialogue-overlay #options {
   margin-top: 13px;
 }
-/* line 73, ../sass/screen.sass */
+/* line 74, ../sass/screen.sass */
 #dialogue-overlay #options .response {
   display: block;
   color: #00aacc;
   margin-bottom: 8px;
 }
-/* line 77, ../sass/screen.sass */
+/* line 78, ../sass/screen.sass */
 #dialogue-overlay h2 {
   font-size: 27px;
   margin: 0;
