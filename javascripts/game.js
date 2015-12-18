@@ -192,7 +192,7 @@ game = {
         n = 0;
       }
       sprite_sheet_handle.attr('src', obj.img_path);
-      sprite_sheet_handle.css('left', -(n * 320) + 'px');
+      sprite_sheet_handle.css('left', -(n * obj.diameter) + 'px');
       n++;
     }, obj.framerate);
   },
@@ -261,6 +261,13 @@ game = {
       x: 0,
       y: 0,
     },
+    sprite: {
+      ref: 'player',
+      img_path: 'images/sprites/player/walk_down.png',
+      diameter: 320,
+      framerate: 100,
+      num_frames: 4
+    },
 
     can_move: function(direction) {
       switch(direction) {
@@ -328,14 +335,6 @@ game = {
       }
       target_tile = self.get_tile({ x: target_obj.position.x, y: target_obj.position.y })
       return (prospective_tile == target_tile)
-    },
-
-    sprite: {
-      ref: 'player',
-      img_path: 'images/sprites/player/walk_down.png',
-      diameter: 320,
-      framerate: 100,
-      num_frames: 4
     }
   },
 
@@ -344,6 +343,11 @@ game = {
       img_path: 'empty.png',
       walkable: true
     },
+    DOR: {
+      img_path: 'empty.png',
+      walkable: true,
+      destination: ''
+    },
     F00: {
       img_path: 'tiles/floor_0030.png',
       walkable: true
@@ -351,6 +355,30 @@ game = {
     W10: {
       img_path: 'tiles/floor_and_plant_0010.png',
       walkable: false
+    },
+    W40: {
+      img_path: 'tiles/wall_0040.png',
+      walkable: false
+    },
+    W41: {
+      img_path: 'tiles/wall_0041.png',
+      walkable: true
+    },
+    W42: {
+      img_path: 'tiles/wall_0042.png',
+      walkable: true
+    },
+    W43: {
+      img_path: 'tiles/wall_0043.png',
+      walkable: true
+    },
+    W44: {
+      img_path: 'tiles/wall_0044.png',
+      walkable: true
+    },
+    W45: {
+      img_path: 'tiles/wall_0045.png',
+      walkable: true
     },
     W00: {
       img_path: 'tiles/wall_0030.png',

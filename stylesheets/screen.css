@@ -82,7 +82,7 @@ body {
 /* line 59, ../sass/screen.sass */
 #dialogue-overlay {
   position: absolute;
-  font-family: "Press Start 2P", cursive;
+  font-family: "Share Tech Mono";
   letter-spacing: -2px;
   font-weight: 0;
   line-height: 1.6em;
@@ -117,12 +117,13 @@ body {
 }
 /* line 85, ../sass/screen.sass */
 #dialogue-overlay #options .response {
+  text-decoration: none;
   cursor: pointer;
   display: block;
   color: #00aacc;
   margin-bottom: 8px;
 }
-/* line 90, ../sass/screen.sass */
+/* line 91, ../sass/screen.sass */
 #dialogue-overlay h2 {
   font-size: 27px;
   margin: 0;
