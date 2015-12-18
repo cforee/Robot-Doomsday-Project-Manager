@@ -380,6 +380,18 @@ game = {
       img_path: 'tiles/wall_0045.png',
       walkable: true
     },
+    W46: {
+      img_path: 'tiles/wall_0046.png',
+      walkable: true
+    },
+    W47: {
+      img_path: 'tiles/wall_0047.png',
+      walkable: true
+    },
+    W48: {
+      img_path: 'tiles/wall_0048.png',
+      walkable: true
+    },
     W00: {
       img_path: 'tiles/wall_0030.png',
       walkable: false
