@@ -184,7 +184,6 @@ game = {
   },
 
   cycle_frames: function(obj) {
-    console.log(obj);
     var sprite_sheet_handle = $('#spritesheet-' + obj.ref);
     var n = 0;
     setInterval(function() {
@@ -199,6 +198,17 @@ game = {
 
   get_tile: function(coords) {
     cell_num = (coords.y * self.level.cols) + coords.x;
+
+    // handle special tiles
+    if (this.tile_types[this.level.map[cell_num]].is_portal) {
+      $('#floormap').fadeOut(1000,
+        function() {
+          // load new map based on destination
+
+        }
+      )
+    }
+
     return cell_num;
   },
 
@@ -346,6 +356,7 @@ game = {
     DOR: {
       img_path: 'empty.png',
       walkable: true,
+      is_portal: true,
       destination: ''
     },
     F00: {
