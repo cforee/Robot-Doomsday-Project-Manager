@@ -50,19 +50,16 @@ game = {
 
     this.center_player();
 
-    self = this;
-    setTimeout(function() {
-      $.each(self.level.npcs, function(i,obj) {
-        self.cycle_npc_frames(obj)
-      });
-    }, 500);
-
   },
 
   start: function() {
     self = this;
 
-    this.player.sprite.cycle_frames();
+    // "get things moving"
+    $.each(self.level.npcs, function(i,obj) {
+      self.cycle_frames(obj)
+    });
+    this.cycle_frames(this.player.sprite);
 
     $('body').on('keydown', function(k) {
       k.preventDefault();
@@ -153,7 +150,7 @@ game = {
       this.floormap_handle.append('<div class="tile"><img src="images/' +  this.tile_types[this.level.map[n]].img_path    + '" /></div>');
     }
     $.each(this.level.npcs, function(i,obj) {
-      self.npcmap_handle.append('<div class="mtile" id="' + obj.ref + '"><img id="' + 'spritesheet-' + obj.ref + '" src="images/sprites/' + obj.img_path + '" /></div>');
+      self.npcmap_handle.append('<div class="mtile" id="' + obj.ref + '"><img id="' + 'spritesheet-' + obj.ref + '" src="' + obj.img_path + '" /></div>');
 
       // position mtiles
       relative_x = obj.position.x * obj.diameter;
@@ -186,6 +183,20 @@ game = {
     this.player_handle.css('top',viewport_relative_y + 'px');
   },
 
+  cycle_frames: function(obj) {
+    console.log(obj);
+    var sprite_sheet_handle = $('#spritesheet-' + obj.ref);
+    var n = 0;
+    setInterval(function() {
+      if (n >= obj.num_frames) {
+        n = 0;
+      }
+      sprite_sheet_handle.attr('src', obj.img_path);
+      sprite_sheet_handle.css('left', -(n * 320) + 'px');
+      n++;
+    }, obj.framerate);
+  },
+
   get_tile: function(coords) {
     cell_num = (coords.y * self.level.cols) + coords.x;
     return cell_num;
@@ -197,20 +208,6 @@ game = {
     down: 40,
     left: 37,
     interact: 69
-  },
-
-  cycle_npc_frames: function(obj) {
-    var sprite_sheet_handle = $('#spritesheet-' + obj.ref);
-
-    setInterval(function() {
-      if (n >= obj.num_frames) {
-        n = 0;
-      }
-      sprite_sheet_handle.attr('src', 'images/sprites/' + obj.img_path);
-      sprite_sheet_handle.css('left', -(n * 320) + 'px');
-      n++;
-    }, obj.framerate);
-
   },
 
   hide_dialogue: function() {
@@ -334,24 +331,11 @@ game = {
     },
 
     sprite: {
+      ref: 'player',
       img_path: 'images/sprites/player/walk_down.png',
       diameter: 320,
       framerate: 100,
-      num_frames: 4,
-
-      cycle_frames: function() {
-        sprite_sheet_handle = $('#spritesheet-player');
-
-        setInterval(function() {
-          if (n >= self.player.sprite.num_frames) {
-            n = 0;
-          }
-          sprite_sheet_handle.attr('src', self.player.sprite.img_path);
-          sprite_sheet_handle.css('left', -(n * 320) + 'px');
-          n++;
-        }, self.player.sprite.framerate);
-
-      }
+      num_frames: 4
     }
   },
 

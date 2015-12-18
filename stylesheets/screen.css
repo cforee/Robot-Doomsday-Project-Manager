@@ -4,6 +4,17 @@ body {
 }
 
 /* line 6, ../sass/screen.sass */
+#game-container {
+  position: absolute;
+  z-index: 1000;
+  margin: 0;
+  padding: 0;
+  border: 1px solid red;
+  width: 50px;
+  height: 50px;
+}
+
+/* line 15, ../sass/screen.sass */
 #map-container {
   position: absolute;
   overflow: hidden;
@@ -12,29 +23,29 @@ body {
   width: 100%;
   height: 100%;
 }
-/* line 13, ../sass/screen.sass */
+/* line 22, ../sass/screen.sass */
 #map-container #floormap, #map-container #itemmap, #map-container #npcmap, #map-container #dialogue-overlay {
   position: absolute;
   top: 0;
   left: 0;
 }
-/* line 17, ../sass/screen.sass */
+/* line 26, ../sass/screen.sass */
 #map-container #floormap img, #map-container #itemmap img, #map-container #npcmap img, #map-container #dialogue-overlay img {
   position: absolute;
 }
-/* line 19, ../sass/screen.sass */
+/* line 28, ../sass/screen.sass */
 #map-container #floormap {
   z-index: 100;
 }
-/* line 21, ../sass/screen.sass */
+/* line 30, ../sass/screen.sass */
 #map-container #itemmap {
   z-index: 200;
 }
-/* line 23, ../sass/screen.sass */
+/* line 32, ../sass/screen.sass */
 #map-container #npcmap {
   z-index: 300;
 }
-/* line 25, ../sass/screen.sass */
+/* line 34, ../sass/screen.sass */
 #map-container #player {
   position: absolute;
   overflow: hidden;
@@ -46,11 +57,11 @@ body {
   padding: 0;
   z-index: 300;
 }
-/* line 35, ../sass/screen.sass */
+/* line 44, ../sass/screen.sass */
 #map-container #player img {
   position: absolute;
 }
-/* line 38, ../sass/screen.sass */
+/* line 47, ../sass/screen.sass */
 #map-container .tile, #map-container .mtile {
   width: 320px;
   height: 320px;
@@ -58,17 +69,17 @@ body {
   margin: 0;
   padding: 0;
 }
-/* line 44, ../sass/screen.sass */
+/* line 53, ../sass/screen.sass */
 #map-container .tile {
   position: relative;
   display: inline-block;
 }
-/* line 47, ../sass/screen.sass */
+/* line 56, ../sass/screen.sass */
 #map-container .mtile {
   position: absolute;
 }
 
-/* line 50, ../sass/screen.sass */
+/* line 59, ../sass/screen.sass */
 #dialogue-overlay {
   position: absolute;
   font-family: "Press Start 2P", cursive;
@@ -96,21 +107,22 @@ body {
   opacity: 0.8;
   display: none;
 }
-/* line 72, ../sass/screen.sass */
+/* line 81, ../sass/screen.sass */
 #dialogue-overlay #dialogue {
   margin-top: 8px;
 }
-/* line 74, ../sass/screen.sass */
+/* line 83, ../sass/screen.sass */
 #dialogue-overlay #options {
   margin-top: 13px;
 }
-/* line 76, ../sass/screen.sass */
+/* line 85, ../sass/screen.sass */
 #dialogue-overlay #options .response {
+  cursor: pointer;
   display: block;
   color: #00aacc;
   margin-bottom: 8px;
 }
-/* line 80, ../sass/screen.sass */
+/* line 90, ../sass/screen.sass */
 #dialogue-overlay h2 {
   font-size: 27px;
   margin: 0;

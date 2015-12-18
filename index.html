@@ -2,13 +2,14 @@
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="stylesheets/screen.css" media="screen" />
-    <link href='https://fonts.googleapis.com/css?family=Share+Tech+Mono' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet' type='text/css'>
+    <!--link href='https://fonts.googleapis.com/css?family=Share+Tech+Mono' rel='stylesheet' type='text/css' -->
+    <!--link href='https://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet' type='text/css' -->
     <script type="text/javascript" src="javascripts/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="javascripts/levels.js"></script>
     <script type="text/javascript" src="javascripts/game.js"></script>
   </head>
-  <body>
+  <body onload="document.getElementById('key-listener').focus()">
+    <div id="key-listener"></div>
     <div id="map-container">
       <div id="backdrop"></div>
       <div id="floormap">
