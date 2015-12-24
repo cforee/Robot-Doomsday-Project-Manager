@@ -228,35 +228,34 @@ game = {
     self = this;
     this.dialogue_overlay_handle.fadeIn(300);
 
-    var dialogue_file = 'data/dialogue/dialogue_' + interlocutor.ref + '.json';
+    var dialogue_file = 'assets/dialogue_' + interlocutor.ref + '.json';
     $.get(dialogue_file, function(data) {
-      console.log(data);
-    });
+      var dialogues = data['dialogue_tree']
+      $('#interlocutor').html('<h2>' + interlocutor.name + '</h2>');
 
-    $('#interlocutor').html('<h2>' + interlocutor.name + '</h2>');
-
-    if (dialogues[current].text.length > 1) {
-      $('#dialogue').html('');
-      $('#dialogue').html(dialogues[current].text);
-    }
-    var response_set = []
-    $.each(dialogues[current].responses, function() {
-      if (parseInt(this.next) === 0) {
-        response_set.push('<a class="response" href="http://www.google.com">' + this.text + '</a>');
-      } else {
-        response_set.push('<a class="response">' + this.text + '</a>');
+      if (dialogues[current].text.length > 1) {
+        $('#dialogue').html('');
+        $('#dialogue').html(dialogues[current].text);
       }
-    });
-    $('#options').html(response_set);
-    $('.response').on('click keydown', function() {
-      self.dialogue_overlay_handle.hide();
-      choice = $('.response').index(this);
-      $.map(dialogues, function(obj) {
-        if (obj.id === parseInt(dialogues[current].responses[choice].next)) {
-          var next = $(dialogues).index(obj);
-          setTimeout(self.draw_dialogue(next, interlocutor), 150);
-          self.dialogue_overlay_handle.fadeIn(100);
+      var response_set = []
+      $.each(dialogues[current].responses, function() {
+        if (parseInt(this.next) === 0) {
+          response_set.push('<a class="response" href="http://www.google.com">' + this.text + '</a>');
+        } else {
+          response_set.push('<a class="response">' + this.text + '</a>');
         }
+      });
+      $('#options').html(response_set);
+      $('.response').on('click keydown', function() {
+        self.dialogue_overlay_handle.hide();
+        choice = $('.response').index(this);
+        $.map(dialogues, function(obj) {
+          if (obj.id === parseInt(dialogues[current].responses[choice].next)) {
+            var next = $(dialogues).index(obj);
+            setTimeout(self.draw_dialogue(next, interlocutor), 150);
+            self.dialogue_overlay_handle.fadeIn(100);
+          }
+        });
       });
     });
   },

@@ -9,9 +9,9 @@ Bundler.require(*Rails.groups)
 module RdpmDemo
   class Application < Rails::Application
 
-    config.assets.paths << "#{Rails.root}/app/assets/data"
-    config.assets.paths << "#{Rails.root}/app/assets/data/dialogue"
-
+    config.assets.enabled = true
+    config.assets.paths << Rails.root.join("app", "assets", "data")
+    config.assets.paths << Rails.root.join("app", "assets", "data", "dialogue")
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
