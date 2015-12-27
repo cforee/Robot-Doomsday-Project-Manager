@@ -1,7 +1,11 @@
 $(function() {
-  game.init_level('lobby');
-  game.draw_level();
-  game.start();
+  $.getJSON( "assets/levels/0010_opening.json", function( data ) {
+    game.level = data;
+  }).done(function() {
+    game.init();
+    game.draw_level();
+    game.start();
+  });
 });
 
 game = {
@@ -17,7 +21,7 @@ game = {
   real_map_height: null,
   move_increment: 320,
 
-  init_level: function(level_name) {
+  init: function(level_name) {
 
     // init all the things
     this.container_handle                   = $('#map-container');
@@ -26,9 +30,6 @@ game = {
     this.player_handle                      = $('#player');
     this.itemmap_handle                     = $('#itemmap');
     this.dialogue_overlay_handle            = $('#dialogue-overlay');
-
-    // set current level
-    this.level = levels[level_name];
 
     // get real floormap width and height
     this.real_map_width = this.level.tile_diameter * this.level.cols;
