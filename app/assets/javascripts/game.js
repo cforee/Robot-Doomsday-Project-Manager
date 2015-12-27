@@ -1,15 +1,4 @@
-$(function() {
-  $.getJSON( "assets/levels/0010_opening.json", function( data ) {
-    game.level = data;
-  }).done(function() {
-    game.init();
-    game.draw_level();
-    game.start();
-  });
-});
-
 game = {
-
   container_handle: $('#map-container'),
   floormap_handle: $('#floormap'),
   npcmap_handle: $('#npcmap'),
@@ -22,6 +11,7 @@ game = {
   move_increment: 320,
 
   init: function(level_name) {
+    self = this;
 
     // init all the things
     this.container_handle                   = $('#map-container');
@@ -31,25 +21,33 @@ game = {
     this.itemmap_handle                     = $('#itemmap');
     this.dialogue_overlay_handle            = $('#dialogue-overlay');
 
-    // get real floormap width and height
-    this.real_map_width = this.level.tile_diameter * this.level.cols;
-    this.real_map_height = this.level.tile_diameter * this.level.rows;
+    $.getJSON( "assets/levels/" + level_name + ".json", function( data ) {
+      self.level = data;
 
-    // set floor map h/w
-    this.floormap_handle.css('width', this.real_map_width + 'px');
-    this.floormap_handle.css('height', this.real_map_height + 'px');
+    }).done(function() {
+      // get real floormap width and height
+      self.real_map_width = self.level.tile_diameter * self.level.cols;
+      self.real_map_height = self.level.tile_diameter * self.level.rows;
 
-    // set npc map h/w
-    this.npcmap_handle.css('width', this.real_map_width + 'px');
-    this.npcmap_handle.css('height', this.real_map_height + 'px');
+      // set floor map h/w
+      self.floormap_handle.css('width', self.real_map_width + 'px');
+      self.floormap_handle.css('height', self.real_map_height + 'px');
 
-    this.set_floor_position(this.level.start_position.x, this.level.start_position.y);
-    this.player.location.x = this.level.start_position.x;
-    this.player.location.y = this.level.start_position.y;
+      // set npc map h/w
+      self.npcmap_handle.css('width', self.real_map_width + 'px');
+      self.npcmap_handle.css('height', self.real_map_height + 'px');
 
-    this.player.direction = this.level.start_direction;
+      self.set_floor_position(self.level.start_position.x, self.level.start_position.y);
+      self.player.location.x = self.level.start_position.x;
+      self.player.location.y = self.level.start_position.y;
 
-    this.center_player();
+      self.player.direction = self.level.start_direction;
+
+      self.center_player();
+      self.draw_level();
+      self.start();
+
+    });
 
   },
 
@@ -89,6 +87,7 @@ game = {
           break;
       }
     });
+
   },
 
   move_player: function(direction) {
@@ -134,6 +133,7 @@ game = {
         }
         break;
     }
+
   },
 
   set_floor_position: function(x,y) {
@@ -143,10 +143,14 @@ game = {
     new_y = -(y * this.level.tile_diameter) + viewport_adjustment_y;
     this.floormap_handle.css('left', new_x + 'px');
     this.floormap_handle.css('top',  new_y + 'px');
+
   },
 
   draw_level: function() {
     self = this;
+
+    this.container_handle.hide();
+
     for(n = 0; n < this.level.map.length; n++) {
       this.floormap_handle.append('<div class="tile"><img src="assets/' +  this.tile_types[this.level.map[n]].img_path    + '" /></div>');
     }
@@ -173,8 +177,9 @@ game = {
           )
         );
       }
-
     });
+    this.container_handle.fadeIn(1000);
+
   },
 
   center_player: function() {
@@ -182,12 +187,13 @@ game = {
     viewport_relative_y = (this.container_handle.height() / 2) - (this.player_handle.height() / 2);
     this.player_handle.css('left', viewport_relative_x + 'px');
     this.player_handle.css('top',viewport_relative_y + 'px');
+
   },
 
   cycle_frames: function(obj) {
     var sprite_sheet_handle = $('#spritesheet-' + obj.ref);
     var n = 0;
-    setInterval(function() {
+    window.frame_interval = setInterval(function() {
       if (n >= obj.num_frames) {
         n = 0;
       }
@@ -195,22 +201,30 @@ game = {
       sprite_sheet_handle.css('left', -(n * obj.diameter) + 'px');
       n++;
     }, obj.framerate);
+
   },
 
   get_tile: function(coords) {
+    self = this
     cell_num = (coords.y * self.level.cols) + coords.x;
 
     // handle special tiles
     if (this.tile_types[this.level.map[cell_num]].is_portal) {
-      $('#floormap').fadeOut(1000,
+      self.container_handle.fadeOut(1000,
         function() {
-          // load new map based on destination
-
+          var new_destination = (
+            location.protocol
+            + '//'
+            + location.host
+            + '/?level='
+            + self.tile_types[self.level.map[cell_num]].destination
+          );
+          window.location.href = new_destination;
         }
       )
     }
-
     return cell_num;
+
   },
 
   keys: {
@@ -219,10 +233,12 @@ game = {
     down: 40,
     left: 37,
     interact: 69
+
   },
 
   hide_dialogue: function() {
     this.dialogue_overlay_handle.fadeOut(300);
+
   },
 
   draw_dialogue: function(current, interlocutor) {
@@ -259,6 +275,7 @@ game = {
         });
       });
     });
+
   },
 
 
@@ -351,16 +368,21 @@ game = {
     }
   },
 
+
+
+
+  // tile types
+
   tile_types: {
     NIL: {
       img_path: 'empty.png',
       walkable: true
     },
-    DOR: {
+    D01: {
       img_path: 'empty.png',
       walkable: true,
       is_portal: true,
-      destination: ''
+      destination: '0010_opening'
     },
     F00: {
       img_path: 'tiles/floor_0030.png',

@@ -22,7 +22,7 @@
     "W40","W44","W10","F00","W10","W45","W40",
     "W40","W47","W46","F00","W46","W48","W40",
     "W40","W40","W40","F00","W40","W40","W40",
-    "NIL","NIL","NIL","DOR","NIL","NIL","NIL"
+    "NIL","NIL","NIL","D01","NIL","NIL","NIL"
   ],
   "occupied_tiles": [],
   "cols": 7,
