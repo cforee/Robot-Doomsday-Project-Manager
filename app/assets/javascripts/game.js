@@ -184,7 +184,7 @@ game = {
 
   center_player: function() {
     viewport_relative_x = (this.container_handle.width()  / 2) - (this.player_handle.width()  / 2);
-    viewport_relative_y = (this.container_handle.height() / 2) - (this.player_handle.height() / 2);
+    viewport_relative_y = (this.container_handle.height() / 2) - (this.player_handle.height() / 2) - this.player.sprite.adjust_y;
     this.player_handle.css('left', viewport_relative_x + 'px');
     this.player_handle.css('top',viewport_relative_y + 'px');
 
@@ -295,6 +295,7 @@ game = {
       ref: 'player',
       img_path: 'assets/sprites/player/walk_down.png',
       diameter: 320,
+      adjust_y: 20,
       framerate: 100,
       num_frames: 4
     },
