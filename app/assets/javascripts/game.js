@@ -3,6 +3,8 @@ game = {
   // TODO: move tile types hash to database and load dynamically
   // TODO: add npc "characters" for effects (lasers, charging electricity, weapon discharge, etc)
   // TODO: add mod effects that overlay player sprite (helicoptor head, fire boots, etc)
+  // TODO: "AI" for in-motion npcs - other robots should move either randomly or with a sense of purpose
+  // TODO: electro-shock effect for robots (wiggle and electrical bolts, think R2D2 getting shocked)
 
   init: function(level_name, start_x, start_y, start_direction) {
     self = this;
@@ -418,7 +420,7 @@ game = {
         start_direction: 'up',
         start_position: {
           x: 1,
-          y: 25
+          y: 26
         }
       }
     },
@@ -431,7 +433,7 @@ game = {
         start_direction: 'up',
         start_position: {
           x: 3,
-          y: 25
+          y: 26
         }
       }
     },
@@ -444,7 +446,7 @@ game = {
         start_direction: 'up',
         start_position: {
           x: 5,
-          y: 25
+          y: 26
         }
       }
     },
