@@ -10,7 +10,7 @@ game = {
     this.player_handle                      = $('#player');
     this.itemmap_handle                     = $('#itemmap');
     this.dialogue_overlay_handle            = $('#dialogue-overlay');
-    this.move_increment                     = 320;
+    this.move_increment                     = 144;
     this.ghost_mode                         = false;
     this.room_transition_slowness           = 500;
 
@@ -25,6 +25,9 @@ game = {
         self.player.direction = self.level.start_direction = start_direction;
         self.face_player(start_direction);
       }
+
+      // set move increment based on tile diameter
+      self.move_increment = self.level.tile_diameter;
 
       // get real floormap width and height
       self.real_map_width = self.level.tile_diameter * self.level.cols;
@@ -299,7 +302,7 @@ game = {
     sprite: {
       ref: 'player',
       img_path: 'assets/sprites/player/walk_down.png',
-      diameter: 320,
+      diameter: 144,
       adjust_y: 20,
       framerate: 100,
       num_frames: 4

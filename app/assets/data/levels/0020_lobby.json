@@ -18,7 +18,7 @@
   "occupied_tiles": [],
   "cols": 8,
   "rows": 12,
-  "tile_diameter": 320,
+  "tile_diameter": 144,
   "start_position": {
     "x": 3,
     "y": 3
@@ -37,7 +37,7 @@
       "name": "red balloon",
       "img_path": "assets/sprites/npc/red_balloon.png",
       "dialogue_path": "assets/data/dialogue/red_balloon.json",
-      "diameter": 320,
+      "diameter": 144,
       "framerate": 200,
       "num_frames": 4,
       "walkable": false,

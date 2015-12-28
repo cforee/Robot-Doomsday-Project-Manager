@@ -28,7 +28,7 @@
   "occupied_tiles": [],
   "cols": 29,
   "rows": 22,
-  "tile_diameter": 320,
+  "tile_diameter": 144,
   "start_position": {
     "x": 3,
     "y": 17
