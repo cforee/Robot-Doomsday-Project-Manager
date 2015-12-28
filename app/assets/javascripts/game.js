@@ -12,6 +12,7 @@ game = {
     this.dialogue_overlay_handle            = $('#dialogue-overlay');
     this.move_increment                     = 320;
     this.ghost_mode                         = false;
+    this.room_transition_slowness           = 500;
 
     $.getJSON( "assets/levels/" + level_name + ".json", function( data ) {
       self.level = data;
@@ -20,7 +21,10 @@ game = {
       // set start_x and start_y position overrides (if not null)
       if (start_x) { self.player.location.x = self.level.start_position.x = parseInt(start_x); }
       if (start_y) { self.player.location.y = self.level.start_position.y = parseInt(start_y); }
-      if (start_direction) { self.level.start_direction = start_direction }
+      if (start_direction) {
+        self.player.direction = self.level.start_direction = start_direction;
+        self.face_player(start_direction);
+      }
 
       // get real floormap width and height
       self.real_map_width = self.level.tile_diameter * self.level.cols;
@@ -85,6 +89,11 @@ game = {
       }
     });
 
+  },
+
+  face_player: function(direction) {
+    this.player.sprite.img_path = 'assets/sprites/player/walk_' + direction + '.png';
+    return true;
   },
 
   move_player: function(direction) {
@@ -174,7 +183,7 @@ game = {
         );
       }
     });
-    this.container_handle.fadeIn(1000);
+    this.container_handle.fadeIn(this.room_transition_slowness);
 
   },
 
@@ -205,7 +214,7 @@ game = {
     // handle special tiles
     if ((this.tile_types[this.level.map[cell_num]]) && (this.tile_types[this.level.map[cell_num]].is_portal)) {
       last_cell = this.tile_types[self.level.map[cell_num]]
-      self.container_handle.fadeOut(1000, function() {
+      self.container_handle.fadeOut(self.room_transition_slowness, function() {
         var portal = (
           location.protocol
           + '//'
@@ -328,7 +337,6 @@ game = {
             })
           break;
       }
-      console.log(prospective_tile);
       return this.tile_walkable(prospective_tile);
     },
 
@@ -386,7 +394,7 @@ game = {
       img_path: 'empty.png',
       walkable: true
     },
-    D01: {
+    P01: {
       img_path: 'empty.png',
       walkable: true,
       is_portal: true,
@@ -395,7 +403,20 @@ game = {
         start_direction: 'up',
         start_position: {
           x: 3,
-          y: 7
+          y: 10
+        }
+      }
+    },
+    P02: {
+      img_path: 'empty.png',
+      walkable: true,
+      is_portal: true,
+      destination: {
+        ref: '0020_lobby',
+        start_direction: 'up',
+        start_position: {
+          x: 4,
+          y: 10
         }
       }
     },
@@ -407,8 +428,21 @@ game = {
         ref: '0010_opening',
         start_direction: 'down',
         start_position: {
+          x: 25,
+          y: 1
+        }
+      }
+    },
+    E02: {
+      img_path: 'empty.png',
+      walkable: true,
+      is_portal: true,
+      destination: {
+        ref: '0010_opening',
+        start_direction: 'down',
+        start_position: {
           x: 26,
-          y: 3
+          y: 1
         }
       }
     },
