@@ -411,7 +411,7 @@ game = {
         start_direction: 'up',
         start_position: {
           x: 3,
-          y: 10
+          y: 11
         }
       }
     },
@@ -424,7 +424,7 @@ game = {
         start_direction: 'up',
         start_position: {
           x: 4,
-          y: 10
+          y: 11
         }
       }
     },
@@ -457,6 +457,10 @@ game = {
     F00: {
       img_path: 'tiles/floor_0030.png',
       walkable: true
+    },
+    W30: {
+      img_path: 'tiles/wall_0030.png',
+      walkable: false
     },
     W10: {
       img_path: 'tiles/floor_and_plant_0010.png',
