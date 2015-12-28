@@ -11,7 +11,7 @@ game = {
   move_increment: 320,
   ghost_mode: false,
 
-  init: function(level_name, start_x, start_y) {
+  init: function(level_name, start_x, start_y, start_direction) {
     self = this;
 
     // init all the things
@@ -30,6 +30,7 @@ game = {
       // set start_x and start_y position overrides (if not null)
       if (start_x) { self.level.start_position.x = start_x; }
       if (start_y) { self.level.start_position.y = start_y; }
+      if (start_direction) { self.level.start_direction = start_direction }
 
       // get real floormap width and height
       self.real_map_width = self.level.tile_diameter * self.level.cols;
@@ -228,6 +229,8 @@ game = {
           + last_cell.start_position.x
           + '&y='
           + last_cell.start_position.y
+          + '&start_direction='
+          + last_cell.start_direction
         );
         window.location.href = new_destination;
       });
@@ -307,7 +310,9 @@ game = {
     },
 
     can_move: function(direction) {
+      // walk through walls if we're in ghost mode
       if (self.ghost_mode) { return true; }
+
       switch(direction) {
         case 'up':
           prospective_tile = self.get_tile({
@@ -376,6 +381,7 @@ game = {
           break;
       }
       target_tile = self.get_tile({ x: target_obj.position.x, y: target_obj.position.y })
+      console.log(self.tile_types[target_tile])
       return (prospective_tile == target_tile)
     }
   },
@@ -395,6 +401,7 @@ game = {
       walkable: true,
       is_portal: true,
       destination: '0020_lobby',
+      start_direction: 'up',
       start_position: {
         x: 3,
         y: 9
@@ -405,6 +412,7 @@ game = {
       walkable: true,
       is_portal: true,
       destination: '0010_opening',
+      start_direction: 'down',
       start_position: {
         x: 26,
         y: 1
