@@ -27,11 +27,11 @@
   ],
   "occupied_tiles": [],
   "cols": 29,
-  "rows": 21,
+  "rows": 22,
   "tile_diameter": 320,
   "start_position": {
-    "x": 26,
-    "y": 2
+    "x": 3,
+    "y": 17
   },
   "start_direction": "up",
   "items": [

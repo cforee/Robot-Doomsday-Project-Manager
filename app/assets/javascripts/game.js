@@ -9,8 +9,9 @@ game = {
   real_map_width: null,
   real_map_height: null,
   move_increment: 320,
+  ghost_mode: false,
 
-  init: function(level_name) {
+  init: function(level_name, start_x, start_y) {
     self = this;
 
     // init all the things
@@ -20,11 +21,16 @@ game = {
     this.player_handle                      = $('#player');
     this.itemmap_handle                     = $('#itemmap');
     this.dialogue_overlay_handle            = $('#dialogue-overlay');
+    this.ghost_mode                         = false;
 
     $.getJSON( "assets/levels/" + level_name + ".json", function( data ) {
       self.level = data;
 
     }).done(function() {
+      // set start_x and start_y position overrides (if not null)
+      if (start_x) { self.level.start_position.x = start_x; }
+      if (start_y) { self.level.start_position.y = start_y; }
+
       // get real floormap width and height
       self.real_map_width = self.level.tile_diameter * self.level.cols;
       self.real_map_height = self.level.tile_diameter * self.level.rows;
@@ -218,12 +224,15 @@ game = {
           + location.host
           + '/?level='
           + last_cell.destination
+          + '&x='
+          + last_cell.start_position.x
+          + '&y='
+          + last_cell.start_position.y
         );
         window.location.href = new_destination;
       });
     }
     return cell_num;
-
   },
 
   keys: {
@@ -232,12 +241,10 @@ game = {
     down: 40,
     left: 37,
     interact: 69
-
   },
 
   hide_dialogue: function() {
     this.dialogue_overlay_handle.fadeOut(300);
-
   },
 
   draw_dialogue: function(current, interlocutor) {
@@ -300,6 +307,7 @@ game = {
     },
 
     can_move: function(direction) {
+      if (self.ghost_mode) { return true; }
       switch(direction) {
         case 'up':
           prospective_tile = self.get_tile({
@@ -386,7 +394,21 @@ game = {
       img_path: 'empty.png',
       walkable: true,
       is_portal: true,
-      destination: '0010_opening'
+      destination: '0020_lobby',
+      start_position: {
+        x: 3,
+        y: 9
+      }
+    },
+    E01: {
+      img_path: 'empty.png',
+      walkable: true,
+      is_portal: true,
+      destination: '0010_opening',
+      start_position: {
+        x: 26,
+        y: 1
+      }
     },
     F00: {
       img_path: 'tiles/floor_0030.png',
