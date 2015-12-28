@@ -149,7 +149,6 @@ game = {
         }
         break;
     }
-
   },
 
   set_floor_position: function(x,y) {
@@ -173,8 +172,9 @@ game = {
       self.npcmap_handle.append('<div class="mtile" id="' + obj.ref + '"><img id="' + 'spritesheet-' + obj.ref + '" src="' + obj.img_path + '" /></div>');
 
       // position mtiles
-      relative_x = obj.position.x * obj.diameter;
-      relative_y = obj.position.y * obj.diameter;
+      relative_x = (obj.position.x * obj.diameter);
+      relative_y = (obj.position.y * obj.diameter);
+      if (obj.position.adjust_y) { relative_y -= obj.position.adjust_y; }
       this_npc_handle = $('#'+obj.ref);
       this_npc_handle.css({
         'left': relative_x + 'px',
@@ -318,6 +318,7 @@ game = {
     },
 
     can_move: function(direction) {
+
       // walk through walls if we're in ghost mode
       if (self.fly_mode) { return true; }
 
@@ -349,6 +350,8 @@ game = {
             })
           break;
       }
+      console.log(self.player.location.x + ', ' + self.player.location.y);
+
       return this.tile_walkable(prospective_tile);
     },
 
@@ -414,8 +417,8 @@ game = {
         ref: '0020_lobby',
         start_direction: 'up',
         start_position: {
-          x: 3,
-          y: 11
+          x: 1,
+          y: 25
         }
       }
     },
@@ -427,8 +430,21 @@ game = {
         ref: '0020_lobby',
         start_direction: 'up',
         start_position: {
-          x: 4,
-          y: 11
+          x: 3,
+          y: 25
+        }
+      }
+    },
+    P03: {
+      img_path: 'empty.png',
+      walkable: true,
+      is_portal: true,
+      destination: {
+        ref: '0020_lobby',
+        start_direction: 'up',
+        start_position: {
+          x: 5,
+          y: 25
         }
       }
     },
@@ -440,12 +456,25 @@ game = {
         ref: '0010_opening',
         start_direction: 'down',
         start_position: {
-          x: 25,
+          x: 22,
           y: 1
         }
       }
     },
     E02: {
+      img_path: 'empty.png',
+      walkable: true,
+      is_portal: true,
+      destination: {
+        ref: '0010_opening',
+        start_direction: 'down',
+        start_position: {
+          x: 24,
+          y: 1
+        }
+      }
+    },
+    E03: {
       img_path: 'empty.png',
       walkable: true,
       is_portal: true,
