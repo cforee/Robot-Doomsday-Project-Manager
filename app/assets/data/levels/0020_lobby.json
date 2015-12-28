@@ -2,8 +2,9 @@
   "name": "Lobby",
   "caption": "This is really going to be something.",
   "map": [
-    "W40","W40","W40","W40","W40","W40","W40",
-    "W40","W43","W41","W41","W41","W42","W40",
+    "NIL","NIL","NIL","NIL","NIL","NIL","NIL",
+    "W40","W44","W40","W40","W40","W45","W40",
+    "W40","W44","W41","W41","W41","W45","W40",
     "W40","W44","F00","F00","F00","W45","W40",
     "W40","W44","W10","F00","W10","W45","W40",
     "W40","W44","F00","F00","F00","W45","W40",
@@ -46,11 +47,41 @@
     {
       "position": {
         "x": 3,
-        "y": 2
+        "y": 3
       },
       "ref": "red_balloon",
       "name": "red balloon",
       "img_path": "assets/sprites/npc/red_balloon.png",
+      "dialogue_path": "assets/data/dialogue/red_balloon.json",
+      "diameter": 144,
+      "framerate": 200,
+      "num_frames": 4,
+      "walkable": false,
+      "movement_pattern": false
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 1
+      },
+      "ref": "laser_wall_0010",
+      "name": "laser wall",
+      "img_path": "assets/sprites/npc/laser_wall_horiz_right.png",
+      "dialogue_path": "assets/data/dialogue/red_balloon.json",
+      "diameter": 144,
+      "framerate": 200,
+      "num_frames": 4,
+      "walkable": false,
+      "movement_pattern": false
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 1
+      },
+      "ref": "laser_wall_0020",
+      "name": "laser wall",
+      "img_path": "assets/sprites/npc/laser_wall_horiz_left.png",
       "dialogue_path": "assets/data/dialogue/red_balloon.json",
       "diameter": 144,
       "framerate": 200,

@@ -538,6 +538,14 @@ game = {
     W00: {
       img_path: 'tiles/wall_0030.png',
       walkable: false
+    },
+    LW1: {
+      img_path: 'tiles/laser_wall_horiz.png',
+      walkable: false
+    },
+    LW2: {
+      img_path: 'tiles/laser_wall_horiz_left.png',
+      walkable: false
     }
   },
 
