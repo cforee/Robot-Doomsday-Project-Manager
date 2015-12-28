@@ -11,7 +11,7 @@ game = {
     this.itemmap_handle                     = $('#itemmap');
     this.dialogue_overlay_handle            = $('#dialogue-overlay');
     this.move_increment                     = 144;
-    this.ghost_mode                         = false;
+    this.fly_mode                           = false;
     this.room_transition_slowness           = 500;
 
     $.getJSON( "assets/levels/" + level_name + ".json", function( data ) {
@@ -88,6 +88,9 @@ game = {
           break;
         case self.keys.attack:
           // TODO: add attack handlers
+          break;
+        case self.keys.fly:
+          self.fly_mode = self.fly_mode ? false : true;
           break;
       }
     });
@@ -242,7 +245,9 @@ game = {
     right: 39,
     down: 40,
     left: 37,
-    interact: 69
+    interact: 69,
+    attack: 32,
+    fly: 70
   },
 
   hide_dialogue: function() {
@@ -310,7 +315,7 @@ game = {
 
     can_move: function(direction) {
       // walk through walls if we're in ghost mode
-      if (self.ghost_mode) { return true; }
+      if (self.fly_mode) { return true; }
 
       prospective_tile = null;
 
