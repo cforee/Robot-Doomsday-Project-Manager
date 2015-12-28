@@ -1,5 +1,6 @@
 game = {
 
+  // TODO: update motion - separate events for keydown and keyup - allow for combined events
   // TODO: move tile types hash to database and load dynamically
   // TODO: add npc "characters" for effects (lasers, charging electricity, weapon discharge, etc)
   // TODO: add mod effects that overlay player sprite (helicoptor head, fire boots, etc)
