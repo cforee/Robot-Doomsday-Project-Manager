@@ -1,15 +1,4 @@
 game = {
-  container_handle: $('#map-container'),
-  floormap_handle: $('#floormap'),
-  npcmap_handle: $('#npcmap'),
-  itemmap_handle: $('#itemmap'),
-  player_handle: $('#player'),
-  dialogue_overlay_handle: $('#dialogue-overlay'),
-  level: null,
-  real_map_width: null,
-  real_map_height: null,
-  move_increment: 320,
-  ghost_mode: false,
 
   init: function(level_name, start_x, start_y, start_direction) {
     self = this;
@@ -21,6 +10,7 @@ game = {
     this.player_handle                      = $('#player');
     this.itemmap_handle                     = $('#itemmap');
     this.dialogue_overlay_handle            = $('#dialogue-overlay');
+    this.move_increment                     = 320;
     this.ghost_mode                         = false;
 
     $.getJSON( "assets/levels/" + level_name + ".json", function( data ) {
@@ -28,8 +18,8 @@ game = {
 
     }).done(function() {
       // set start_x and start_y position overrides (if not null)
-      if (start_x) { self.level.start_position.x = start_x; }
-      if (start_y) { self.level.start_position.y = start_y; }
+      if (start_x) { self.player.location.x = self.level.start_position.x = parseInt(start_x); }
+      if (start_y) { self.player.location.y = self.level.start_position.y = parseInt(start_y); }
       if (start_direction) { self.level.start_direction = start_direction }
 
       // get real floormap width and height
@@ -150,7 +140,6 @@ game = {
     new_y = -(y * this.level.tile_diameter) + viewport_adjustment_y;
     this.floormap_handle.css('left', new_x + 'px');
     this.floormap_handle.css('top',  new_y + 'px');
-
   },
 
   draw_level: function() {
@@ -194,7 +183,6 @@ game = {
     viewport_relative_y = (this.container_handle.height() / 2) - (this.player_handle.height() / 2) - this.player.sprite.adjust_y;
     this.player_handle.css('left', viewport_relative_x + 'px');
     this.player_handle.css('top',viewport_relative_y + 'px');
-
   },
 
   cycle_frames: function(obj) {
@@ -208,7 +196,6 @@ game = {
       sprite_sheet_handle.css('left', -(n * obj.diameter) + 'px');
       n++;
     }, obj.framerate);
-
   },
 
   get_tile: function(coords) {
@@ -219,20 +206,20 @@ game = {
     if ((this.tile_types[this.level.map[cell_num]]) && (this.tile_types[this.level.map[cell_num]].is_portal)) {
       last_cell = this.tile_types[self.level.map[cell_num]]
       self.container_handle.fadeOut(1000, function() {
-        var new_destination = (
+        var portal = (
           location.protocol
           + '//'
           + location.host
           + '/?level='
-          + last_cell.destination
+          + last_cell.destination.ref
           + '&x='
-          + last_cell.start_position.x
+          + last_cell.destination.start_position.x
           + '&y='
-          + last_cell.start_position.y
+          + last_cell.destination.start_position.y
           + '&start_direction='
-          + last_cell.start_direction
+          + last_cell.destination.start_direction
         );
-        window.location.href = new_destination;
+        window.location.href = portal;
       });
     }
     return cell_num;
@@ -313,6 +300,8 @@ game = {
       // walk through walls if we're in ghost mode
       if (self.ghost_mode) { return true; }
 
+      prospective_tile = null;
+
       switch(direction) {
         case 'up':
           prospective_tile = self.get_tile({
@@ -339,6 +328,7 @@ game = {
             })
           break;
       }
+      console.log(prospective_tile);
       return this.tile_walkable(prospective_tile);
     },
 
@@ -400,22 +390,26 @@ game = {
       img_path: 'empty.png',
       walkable: true,
       is_portal: true,
-      destination: '0020_lobby',
-      start_direction: 'up',
-      start_position: {
-        x: 3,
-        y: 9
+      destination: {
+        ref: '0020_lobby',
+        start_direction: 'up',
+        start_position: {
+          x: 3,
+          y: 7
+        }
       }
     },
     E01: {
       img_path: 'empty.png',
       walkable: true,
       is_portal: true,
-      destination: '0010_opening',
-      start_direction: 'down',
-      start_position: {
-        x: 26,
-        y: 1
+      destination: {
+        ref: '0010_opening',
+        start_direction: 'down',
+        start_position: {
+          x: 26,
+          y: 3
+        }
       }
     },
     F00: {
