@@ -1,5 +1,9 @@
 game = {
 
+  // TODO: move tile types hash to database and load dynamically
+  // TODO: add npc "characters" for effects (lasers, charging electricity, weapon discharge, etc)
+  // TODO: add mod effects that overlay player sprite (helicoptor head, fire boots, etc)
+
   init: function(level_name, start_x, start_y, start_direction) {
     self = this;
 
