@@ -209,19 +209,18 @@ game = {
     cell_num = (coords.y * self.level.cols) + coords.x;
 
     // handle special tiles
-    if (this.tile_types[this.level.map[cell_num]].is_portal) {
-      self.container_handle.fadeOut(1000,
-        function() {
-          var new_destination = (
-            location.protocol
-            + '//'
-            + location.host
-            + '/?level='
-            + self.tile_types[self.level.map[cell_num]].destination
-          );
-          window.location.href = new_destination;
-        }
-      )
+    if ((this.tile_types[this.level.map[cell_num]]) && (this.tile_types[this.level.map[cell_num]].is_portal)) {
+      last_cell = this.tile_types[self.level.map[cell_num]]
+      self.container_handle.fadeOut(1000, function() {
+        var new_destination = (
+          location.protocol
+          + '//'
+          + location.host
+          + '/?level='
+          + last_cell.destination
+        );
+        window.location.href = new_destination;
+      });
     }
     return cell_num;
 
@@ -331,10 +330,14 @@ game = {
     },
 
     tile_walkable: function(cell) {
-      return(
-        self.tile_types[self.level.map[prospective_tile]].walkable &&
-        ($.inArray(prospective_tile, self.level.occupied_tiles) === -1)
-      )
+      if (self.tile_types[self.level.map[prospective_tile]]) {
+        return(
+          self.tile_types[self.level.map[prospective_tile]].walkable &&
+          ($.inArray(prospective_tile, self.level.occupied_tiles) === -1)
+        );
+      } else {
+        return false
+      }
     },
 
     is_facing: function(target_obj) {
