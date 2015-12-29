@@ -69,7 +69,7 @@
       "img_path": "assets/sprites/npc/laser_wall_horiz_right.png",
       "dialogue_path": "assets/data/dialogue/red_balloon.json",
       "diameter": 144,
-      "framerate": 200,
+      "framerate": 50,
       "num_frames": 4,
       "walkable": false,
       "movement_pattern": false
@@ -84,7 +84,7 @@
       "img_path": "assets/sprites/npc/laser_wall_horiz_left.png",
       "dialogue_path": "assets/data/dialogue/red_balloon.json",
       "diameter": 144,
-      "framerate": 200,
+      "framerate": 50,
       "num_frames": 4,
       "walkable": false,
       "movement_pattern": false
