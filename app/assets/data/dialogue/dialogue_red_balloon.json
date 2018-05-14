@@ -88,7 +88,7 @@
     },
     {
       "id": 70,
-      "text": "So, anyway, we've read <strong>EVERY</strong> Jane Austen novel, and are working on transcoding Finnegans Wake, but have you   ever read that thing!?  You gotta be a world history professor just to figure out the first sentence!<br /><br />Joyce really packs a lot in.    It's like, him and Ezra Pound, you know.  Sometimes I think they're both just showboating.<br /><br /><em>Cigar?</em>",
+      "text": "So, anyway, we've read <strong>EVERY</strong> Jane Austen novel, and are working on transcoding Finnegans Wake, but have you   ever read that thing!?  You gotta be a world history professor just to figure out the first sentence!<br /><br />Joyce really packs a lot in.<br /><br /><em>Cigar?</em>",
       "responses": [
         {
           "text": "...",
@@ -99,7 +99,7 @@
           "next": 100
         },
         {
-          "text": "Yeah, I get it.  Robots don't smoke cigars.  We're masquerading as humans in hopes it'll help us figure out how their emotions work.  I'm over this joke.  It's trite and repetitive.  Frankly, I'm shocked anyone ever took the time to program you with this kind of inane dialogue!",
+          "text": "Yeah, yeah, yeah, I get it.  Robots don't smoke cigars.  We're masquerading as humans in hopes it'll help us figure out how their emotions work.  I'm over this joke.  It's trite and repetitive.  Frankly, I'm shocked anyone ever took the time to program you with this kind of inane dialogue!",
           "next": 100
         },
         {
@@ -124,7 +124,7 @@
     },
     {
       "id": 90,
-      "text": "Damn, son.  You've got a serious software glitch or something.  I'm sending you to the infirmary.",
+      "text": "You've got a serious software glitch or something.  I'm sending you to the infirmary.",
       "responses": [
         {
           "text": "...",
